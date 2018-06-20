@@ -4,5 +4,5 @@
     <string name="hint_pass">Senha</string>
     <string name="button_entrar">Entrar</string>
     <string name="imgdesc_logo">Sitpass Logo</string>
-    <string name="button_fgtpass">Esqueceu a senha?</string>
+    <string name="button_fgtpass"><a href="http://pudim.com.br/">Esqueceu a senha?</a></string>
 </resources>

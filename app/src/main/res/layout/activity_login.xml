@@ -5,61 +5,61 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#303F9F"
     tools:context=".LoginActivity">
 
     <TextView
         android:id="@+id/textView_appname"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
+        android:layout_width="280dp"
+        android:layout_height="49dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:text="@string/app_name"
         android:textAlignment="center"
-        android:textColor="#3949AB"
+        android:textColor="#fff"
         android:textSize="36sp"
-        android:textStyle="bold|italic"
-        app:layout_constraintBottom_toTopOf="@+id/img_sitpasslogo"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.276" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
-        android:id="@+id/img_sitpasslogo"
-        android:layout_width="383dp"
-        android:layout_height="214dp"
-        android:layout_marginTop="76dp"
+        android:id="@+id/img_app_logo"
+        android:layout_width="160dp"
+        android:layout_height="125dp"
+        android:layout_marginTop="8dp"
         android:contentDescription="@string/imgdesc_logo"
+        android:tint="#fff"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/logotopo" />
+        app:layout_constraintTop_toBottomOf="@+id/textView_appname"
+        app:srcCompat="@drawable/transportbusicon" />
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/login_form"
         android:layout_width="wrap_content"
-        android:layout_height="194dp"
-        android:layout_marginBottom="8dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="4dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.513"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/img_sitpasslogo">
+        app:layout_constraintTop_toBottomOf="@+id/img_app_logo">
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/container_email"
             android:layout_width="315dp"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/container_pass"
+            android:textColorHint="#9FA8DA"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
@@ -69,17 +69,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_email"
+                android:textColor="#fff"
                 android:textColorLink="@android:color/holo_blue_dark" />
         </android.support.design.widget.TextInputLayout>
 
         <android.support.design.widget.TextInputLayout
             android:id="@+id/container_pass"
             android:layout_width="315dp"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_login"
+            android:layout_height="0dp"
+            android:textColorHint="#9FA8DA"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent">
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_email">
 
             <android.support.design.widget.TextInputEditText
                 android:id="@+id/input_pass"
@@ -87,35 +88,38 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/hint_pass"
                 android:inputType="textPassword"
+                android:textColor="#fff"
+                android:textColorHint="#9FA8DA"
                 android:textColorLink="@android:color/holo_blue_dark" />
         </android.support.design.widget.TextInputLayout>
 
         <Button
             android:id="@+id/button_login"
             android:layout_width="134dp"
-            android:layout_height="0dp"
-            android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"
-            android:text="@string/button_entrar"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_fgtpass" />
-
-        <Button
-            android:id="@+id/button_fgtpass"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
-            android:backgroundTint="@color/colorPrimary"
-            android:text="@string/button_fgtpass"
-            android:textColor="@android:color/white"
+            android:text="@string/button_entrar"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/button_login"
-            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/link_fgtpass"
+            android:layout_width="137dp"
+            android:layout_height="20dp"
+            android:layout_marginTop="8dp"
+            android:autoLink="web"
+            android:text="@string/button_fgtpass"
+            android:textAlignment="center"
+            android:textColor="#9FA8DA"
+            android:textColorLink="#64B5F6"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/container_pass" />
+
     </android.support.constraint.ConstraintLayout>
 
 </android.support.constraint.ConstraintLayout>
