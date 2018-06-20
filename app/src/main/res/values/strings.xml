@@ -5,4 +5,8 @@
     <string name="button_entrar">Entrar</string>
     <string name="imgdesc_logo">Sitpass Logo</string>
     <string name="button_fgtpass"><a href="http://pudim.com.br/">Esqueceu a senha?</a></string>
+    <string name="title_activity_main">SitpassMobile</string>
+    <string name="title_home">Início</string>
+    <string name="title_second">Recarga</string>
+    <string name="title_third">Histórico</string>
 </resources>
