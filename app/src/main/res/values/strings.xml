@@ -1,12 +1,18 @@
 <resources>
     <string name="app_name">SitpassMobile</string>
-    <string name="hint_email">Endereço de E-mail</string>
+
+    <string name="hint_email">Número de CPF</string>
     <string name="hint_pass">Senha</string>
     <string name="button_entrar">Entrar</string>
     <string name="imgdesc_logo">Sitpass Logo</string>
+    <string name="load_login">Verificando credenciais</string>
     <string name="button_fgtpass"><a href="http://pudim.com.br/">Esqueceu a senha?</a></string>
-    <string name="title_activity_main">SitpassMobile</string>
+
     <string name="title_home">Início</string>
     <string name="title_second">Recarga</string>
     <string name="title_third">Histórico</string>
+
+    <string name="error_email_empty">Email não pode ser vazio</string>
+    <string name="error_password_empty">Senha não pode ser vazia</string>
+    <string name="error_password_small">Senha não pode ter menos que 6 caracteres</string>
 </resources>
