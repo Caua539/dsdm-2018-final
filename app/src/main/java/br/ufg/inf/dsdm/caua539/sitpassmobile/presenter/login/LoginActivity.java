@@ -13,6 +13,7 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.FormProblemException;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.HomeActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebLogin;
 
 public class LoginActivity extends BaseActivity {
@@ -102,7 +103,9 @@ public class LoginActivity extends BaseActivity {
     }
 
     private void goToHome() {
-        showDialogWithMessage("TOP");
+        Intent intent = new Intent(this,HomeActivity.class);
+        startActivity(intent);
+        finish();
 
     }
 

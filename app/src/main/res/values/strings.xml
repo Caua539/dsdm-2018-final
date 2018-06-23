@@ -9,10 +9,14 @@
     <string name="button_fgtpass"><a href="http://pudim.com.br/">Esqueceu a senha?</a></string>
 
     <string name="title_home">Início</string>
-    <string name="title_second">Recarga</string>
-    <string name="title_third">Histórico</string>
+    <string name="title_recarga">Recarga</string>
+    <string name="title_historico">Histórico</string>
 
     <string name="error_email_empty">Email não pode ser vazio</string>
     <string name="error_password_empty">Senha não pode ser vazia</string>
     <string name="error_password_small">Senha não pode ter menos que 6 caracteres</string>
+    <string name="title_activity_home">SitpassMobile</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
