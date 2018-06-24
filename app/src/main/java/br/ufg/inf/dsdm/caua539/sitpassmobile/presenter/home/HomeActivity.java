@@ -24,6 +24,7 @@ public class HomeActivity extends AppCompatActivity implements HomeView.OnFragme
     private RecargaView recargafrag;
     private HistoricoView historicofrag;
 
+    FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
@@ -53,9 +54,9 @@ public class HomeActivity extends AppCompatActivity implements HomeView.OnFragme
 
         initToolbar();
 
-        homefrag = new HomeView();
-        recargafrag = new RecargaView();
-        historicofrag = new HistoricoView();
+        homefrag = HomeView.newInstance(R.id.navigation_home);
+        recargafrag = RecargaView.newInstance(R.id.navigation_recarga);
+        historicofrag = HistoricoView.newInstance(R.id.navigation_historico, 1);
         initView(homefrag);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
@@ -69,15 +70,16 @@ public class HomeActivity extends AppCompatActivity implements HomeView.OnFragme
     }
 
     public void initView(HomeView fragment){
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
+        fragmentManager = getSupportFragmentManager();
+        fragmentTransaction = fragmentManager.beginTransaction();
 
         fragmentTransaction.add(R.id.container_frag, fragment);
         fragmentTransaction.commit();
     }
 
     public void replaceView (BaseFragment fragment){
-        fragmentTransaction = getSupportFragmentManager().beginTransaction();
 
+        fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.container_frag, fragment).addToBackStack(null);
         fragmentTransaction.commit();
     }

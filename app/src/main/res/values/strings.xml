@@ -17,6 +17,14 @@
     <string name="error_password_small">Senha não pode ter menos que 6 caracteres</string>
     <string name="title_activity_home">SitpassMobile</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="home_hello">Bem Vindo, %1$d.</string>
+    <string name="home_descsaldo">Saldo Atual:</string>
+    <string name="home_saldo">%1$d</string>
+    <string name="home_numpass">Você tem crédito suficiente para %1$d passagens.</string>
+    <string name="home_imgdesc">Foto do usuário</string>
+
+    <string name="recarga_hint_valor">Valor da Recarga</string>
+    <string name="recarga_pagamentosdesc">Formas de Pagamento</string>
+    <string name="recarga_cartaocreditodesc">Cartão de Crédito</string>
+    <string name="recarga_cartaoimgdesc">Cartão</string>
 </resources>

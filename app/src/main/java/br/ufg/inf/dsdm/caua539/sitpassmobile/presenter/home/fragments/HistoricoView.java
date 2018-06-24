@@ -2,7 +2,6 @@ package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.fragments;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,10 +23,11 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
  */
 public class HistoricoView extends BaseFragment  {
 
-    // TODO: Customize parameter argument names
     private static final String ARG_COLUMN_COUNT = "column-count";
-    // TODO: Customize parameters
+    private static final String ARG_NAVITEM = "navigation_item";
+
     private int mColumnCount = 1;
+
     private OnListFragmentInteractionListener mListener;
 
     /**
@@ -37,11 +37,11 @@ public class HistoricoView extends BaseFragment  {
     public HistoricoView() {
     }
 
-    // TODO: Customize parameter initialization
-    @SuppressWarnings("unused")
-    public static HistoricoView newInstance(int columnCount) {
+
+    public static HistoricoView newInstance(int navigation_item, int columnCount) {
         HistoricoView fragment = new HistoricoView();
         Bundle args = new Bundle();
+        args.putInt(ARG_NAVITEM, navigation_item);
         args.putInt(ARG_COLUMN_COUNT, columnCount);
         fragment.setArguments(args);
         return fragment;
@@ -52,6 +52,7 @@ public class HistoricoView extends BaseFragment  {
         super.onCreate(savedInstanceState);
 
         if (getArguments() != null) {
+            navigation_item = getArguments().getInt(ARG_NAVITEM);
             mColumnCount = getArguments().getInt(ARG_COLUMN_COUNT);
         }
     }
@@ -59,7 +60,7 @@ public class HistoricoView extends BaseFragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_item_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_historico_view, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {

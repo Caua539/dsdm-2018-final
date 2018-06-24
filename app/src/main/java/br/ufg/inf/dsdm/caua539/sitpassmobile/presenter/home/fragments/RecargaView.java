@@ -4,11 +4,20 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
+
+import java.text.DecimalFormatSymbols;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.CartoesRecyclerViewAdapter;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.MyItemRecyclerViewAdapter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 
 
@@ -21,35 +30,22 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
  * create an instance of this fragment.
  */
 public class RecargaView extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+    private static final String ARG_NAVITEM = "navigation_item";
+
 
     private OnFragmentInteractionListener mListener;
+    private HistoricoView.OnListFragmentInteractionListener listListener;
 
     public RecargaView() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment RecargaView.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static RecargaView newInstance(String param1, String param2) {
+    public static RecargaView newInstance(int navigation_item) {
         RecargaView fragment = new RecargaView();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
+        args.putInt(ARG_NAVITEM, navigation_item);
         fragment.setArguments(args);
         return fragment;
     }
@@ -58,16 +54,30 @@ public class RecargaView extends BaseFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            navigation_item = getArguments().getInt(ARG_NAVITEM);
         }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_recarga_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_recarga_view, container, false);
+
+
+        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView recyclerView = view.findViewById(R.id.recyclerview_cartoes);
+        recyclerView.setLayoutManager(horizontalLayoutManager);
+        recyclerView.setAdapter(new CartoesRecyclerViewAdapter(DummyContent.ITEMS, listListener));
+
+        //Definição de separador de decimais por localidade
+        EditText input = view.findViewById(R.id.input_valor);
+        char separator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
+        input.setKeyListener(DigitsKeyListener.getInstance("0123456789" + separator));
+
+
+
+        return view;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -107,5 +117,10 @@ public class RecargaView extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public interface OnListFragmentInteractionListener {
+        // TODO: Update argument type and name
+        void onListFragmentInteraction(DummyContent.DummyItem item);
     }
 }
