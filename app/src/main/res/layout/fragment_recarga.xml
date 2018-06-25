@@ -5,7 +5,7 @@
     android:id="@+id/fragment_recarga"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".presenter.home.fragments.RecargaView">
+    tools:context=".presenter.recarga.RecargaFragment">
 
     <!-- TODO: Update blank fragment layout -->
 

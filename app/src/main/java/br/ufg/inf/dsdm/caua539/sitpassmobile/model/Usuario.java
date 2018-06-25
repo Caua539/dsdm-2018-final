@@ -3,6 +3,7 @@ package br.ufg.inf.dsdm.caua539.sitpassmobile.model;
 public class Usuario {
 
     private String nome;
+    private String cpf;
     private int session;
 
     public String getNome() {
@@ -20,4 +21,13 @@ public class Usuario {
     public void setSession(int session) {
         this.session = session;
     }
+
+    public String getCpf() {
+        return cpf;
+    }
+
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
+    }
+
 }

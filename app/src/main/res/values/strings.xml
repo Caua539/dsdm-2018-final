@@ -27,4 +27,7 @@
     <string name="recarga_pagamentosdesc">Formas de Pagamento</string>
     <string name="recarga_cartaocreditodesc">Cartão de Crédito</string>
     <string name="recarga_cartaoimgdesc">Cartão</string>
+
+    <string name="historico_titulo">Histórico de Transações</string>
+    <string name="historico_perdido">Cartão perdido ou roubado?</string>
 </resources>

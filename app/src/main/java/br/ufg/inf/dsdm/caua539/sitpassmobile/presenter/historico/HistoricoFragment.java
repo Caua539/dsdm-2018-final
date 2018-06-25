@@ -1,4 +1,4 @@
-package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.fragments;
+package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -9,7 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.MyItemRecyclerViewAdapter;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.HistoricoRecyclerViewAdapter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent.DummyItem;
@@ -21,7 +21,7 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
  * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
  * interface.
  */
-public class HistoricoView extends BaseFragment  {
+public class HistoricoFragment extends BaseFragment  {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
     private static final String ARG_NAVITEM = "navigation_item";
@@ -34,12 +34,12 @@ public class HistoricoView extends BaseFragment  {
      * Mandatory empty constructor for the fragment manager to instantiate the
      * fragment (e.g. upon screen orientation changes).
      */
-    public HistoricoView() {
+    public HistoricoFragment() {
     }
 
 
-    public static HistoricoView newInstance(int navigation_item, int columnCount) {
-        HistoricoView fragment = new HistoricoView();
+    public static HistoricoFragment newInstance(int navigation_item, int columnCount) {
+        HistoricoFragment fragment = new HistoricoFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NAVITEM, navigation_item);
         args.putInt(ARG_COLUMN_COUNT, columnCount);
@@ -60,7 +60,7 @@ public class HistoricoView extends BaseFragment  {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_historico_view, container, false);
+        View view = inflater.inflate(R.layout.fragment_historico, container, false);
 
         // Set the adapter
         if (view instanceof RecyclerView) {
@@ -71,7 +71,7 @@ public class HistoricoView extends BaseFragment  {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
         }
         return view;
     }

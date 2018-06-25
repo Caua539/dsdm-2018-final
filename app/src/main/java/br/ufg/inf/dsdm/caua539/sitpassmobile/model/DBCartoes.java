@@ -15,7 +15,7 @@ public class DBCartoes extends Model {
     @Column(name="Numero")
     public long numero;
 
-    @Column(name="DV")
+    @Column(name="CVV")
     public int digito;
 
     @Column(name="Titular")

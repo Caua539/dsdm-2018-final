@@ -4,13 +4,13 @@ import com.activeandroid.Model;
 import com.activeandroid.annotation.Column;
 import com.activeandroid.annotation.Table;
 
-import java.util.Date;
+import java.util.Calendar;
 
 @Table(name = "Eventos")
 public class DBEventos extends Model {
 
-    @Column(name = "Nome")
-    public String nome;
+    @Column(name = "Codigo")
+    public long codigo;
 
     @Column(name = "Local")
     public String local;
@@ -19,10 +19,13 @@ public class DBEventos extends Model {
     public double valor;
 
     @Column(name = "Data")
-    public Date dia;
+    public Calendar dia;
 
-    @Column(name = "Horario")
-    public Date horario;
-
-
+    public DBEventos(long codigo, String local, double valor, Calendar dia) {
+        super();
+        this.codigo = codigo;
+        this.local = local;
+        this.valor = valor;
+        this.dia = dia;
+    }
 }

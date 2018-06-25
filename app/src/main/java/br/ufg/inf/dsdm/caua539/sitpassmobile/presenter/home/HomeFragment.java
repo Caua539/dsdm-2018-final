@@ -1,49 +1,39 @@
-package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.fragments;
+package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
-
-import java.text.DecimalFormatSymbols;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.CartoesRecyclerViewAdapter;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.MyItemRecyclerViewAdapter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 
 
 /**
  * A simple {@link Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link RecargaView.OnFragmentInteractionListener} interface
+ * {@link HomeFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link RecargaView#newInstance} factory method to
+ * Use the {@link HomeFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class RecargaView extends BaseFragment {
-
+public class HomeFragment extends BaseFragment {
+    // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_NAVITEM = "navigation_item";
 
 
     private OnFragmentInteractionListener mListener;
-    private HistoricoView.OnListFragmentInteractionListener listListener;
 
-    public RecargaView() {
+    public HomeFragment() {
         // Required empty public constructor
     }
 
-    public static RecargaView newInstance(int navigation_item) {
-        RecargaView fragment = new RecargaView();
+    public static HomeFragment newInstance(int navigation_item) {
+        HomeFragment fragment = new HomeFragment();
         Bundle args = new Bundle();
         args.putInt(ARG_NAVITEM, navigation_item);
         fragment.setArguments(args);
@@ -56,28 +46,13 @@ public class RecargaView extends BaseFragment {
         if (getArguments() != null) {
             navigation_item = getArguments().getInt(ARG_NAVITEM);
         }
-
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_recarga_view, container, false);
-
-
-        LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerview_cartoes);
-        recyclerView.setLayoutManager(horizontalLayoutManager);
-        recyclerView.setAdapter(new CartoesRecyclerViewAdapter(DummyContent.ITEMS, listListener));
-
-        //Definição de separador de decimais por localidade
-        EditText input = view.findViewById(R.id.input_valor);
-        char separator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
-        input.setKeyListener(DigitsKeyListener.getInstance("0123456789" + separator));
-
-
-
-        return view;
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -117,10 +92,5 @@ public class RecargaView extends BaseFragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyContent.DummyItem item);
     }
 }

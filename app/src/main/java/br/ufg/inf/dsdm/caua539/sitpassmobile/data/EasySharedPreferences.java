@@ -10,6 +10,7 @@ import android.preference.PreferenceManager;
 
 public class EasySharedPreferences {
 
+    public static String KEY_NAME = "nome";
     public static String KEY_CPF = "cpf";
     public static String KEY_SESSION = "session";
     public static String KEY_LOGGEDIN = "loggedin";

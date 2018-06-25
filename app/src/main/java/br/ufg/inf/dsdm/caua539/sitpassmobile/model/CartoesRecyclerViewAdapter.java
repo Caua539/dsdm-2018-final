@@ -10,7 +10,7 @@ import java.util.List;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent.DummyItem;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.fragments.HistoricoView.OnListFragmentInteractionListener;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment.OnListFragmentInteractionListener;
 
 /**
  * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
