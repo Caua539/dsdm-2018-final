@@ -11,23 +11,19 @@ import java.util.Map;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
 import okhttp3.Response;
 
-public class WebLogin extends WebConnect {
+public class WebSaldo extends WebConnect {
 
-    private static final String SERVICE = "login";
-    private String cpf;
-    private String senha;
+    private static final String SERVICE = "saldo";
+    private String session;
 
-    public WebLogin(String cpf, String senha) {
+    public WebSaldo() {
         super(SERVICE);
-        this.cpf = cpf;
-        this.senha = senha;
     }
 
     @Override
     String getRequestContent() {
         Map<String,String> requestMap = new HashMap<>();
-        requestMap.put("cpf", cpf);
-        requestMap.put("senha", senha);
+        requestMap.put("session", session);
 
         JSONObject json = new JSONObject(requestMap);
         String jsonString = json.toString();
@@ -40,14 +36,9 @@ public class WebLogin extends WebConnect {
         String responseBody = null;
         try {
             responseBody = response.body().string();
-            Usuario user = new Usuario();
             JSONObject object = new JSONObject(responseBody);
-            user.setNome(object.getString("name"));
-            double saldo = (double) object.getInt("saldo");
-            user.setSaldo(saldo);
-            user.setCpf(cpf);
-            user.setSession(object.getString("session"));
-            EventBus.getDefault().post(user);
+            double saldo = (double) object.get("saldo");
+            EventBus.getDefault().post(saldo);
         } catch (IOException e) {
             EventBus.getDefault().post(e);
         } catch (JSONException e) {

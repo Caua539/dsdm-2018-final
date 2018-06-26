@@ -12,6 +12,7 @@ public class EasySharedPreferences {
 
     public static String KEY_NAME = "nome";
     public static String KEY_CPF = "cpf";
+    public static String KEY_SALDO = "saldo";
     public static String KEY_SESSION = "session";
     public static String KEY_LOGGEDIN = "loggedin";
 
@@ -26,6 +27,20 @@ public class EasySharedPreferences {
         editor.putString(key,value);
         editor.commit();
     }
+
+    public static double getDoubleFromKey(Context context, String key) {
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        return Double.longBitsToDouble(pref.getLong(key, Double.doubleToLongBits(0)));
+    }
+
+    public static void setDoubleToKey(Context context, String key, double value){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putLong(key,Double.doubleToRawLongBits(value));
+        editor.commit();
+    }
+
+
 
     public static void setBooleanToKey(Context context, String key, boolean value){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);

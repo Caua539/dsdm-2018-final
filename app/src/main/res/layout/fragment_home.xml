@@ -20,8 +20,8 @@
 
         <ImageView
             android:id="@+id/img_fotousuario"
-            android:layout_width="240dp"
-            android:layout_height="225dp"
+            android:layout_width="215dp"
+            android:layout_height="200dp"
             android:layout_marginBottom="8dp"
             android:background="@drawable/image_border"
             android:contentDescription="@string/home_imgdesc"
@@ -41,11 +41,13 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
+
     </android.support.constraint.ConstraintLayout>
 
     <android.support.constraint.ConstraintLayout
         android:layout_width="0dp"
-        android:layout_height="238dp"
+        android:layout_height="263dp"
+        android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -65,7 +67,7 @@
 
         <TextView
             android:id="@+id/text_saldo"
-            android:layout_width="165dp"
+            android:layout_width="291dp"
             android:layout_height="73dp"
             android:layout_marginTop="8dp"
             android:text="@string/home_saldo"
@@ -88,5 +90,18 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_saldo"
             app:layout_constraintVertical_bias="0.387" />
+
+        <ImageButton
+            android:id="@+id/button_atualizasaldo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="8dp"
+            android:src="@drawable/ic_cached_black_24dp"
+            app:layout_constraintBottom_toTopOf="@+id/text_saldo"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_descpassagens"
+            app:layout_constraintTop_toTopOf="@+id/text_descpassagens" />
     </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>

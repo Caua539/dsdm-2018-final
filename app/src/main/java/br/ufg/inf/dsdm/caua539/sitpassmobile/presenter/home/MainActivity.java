@@ -8,25 +8,31 @@ import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login.LoginActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebSaldo;
 
-public class MainActivity extends AppCompatActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, HistoricoFragment.OnListFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, HistoricoFragment.OnListFragmentInteractionListener {
 
     private HomeFragment homefrag;
     private RecargaFragment recargafrag;
     private HistoricoFragment historicofrag;
+
+    public static final double valorPassagem = 4.05;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -61,10 +67,12 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         homefrag = HomeFragment.newInstance(R.id.navigation_home);
         recargafrag = RecargaFragment.newInstance(R.id.navigation_recarga);
         historicofrag = HistoricoFragment.newInstance(R.id.navigation_historico, 1);
+
         initView(homefrag);
 
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
     }
 
     @Override
@@ -73,10 +81,48 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
         if (!EasySharedPreferences.getBooleanFromKey(
                 this, EasySharedPreferences.KEY_LOGGEDIN)) {
             goToLogin();
+            return;
         }
-
-
+        EventBus.getDefault().register(this);
+        double saldo = EasySharedPreferences.getDoubleFromKey(this, EasySharedPreferences.KEY_SALDO);
+        String nome = EasySharedPreferences.getStringFromKey(this, EasySharedPreferences.KEY_NAME);
+        homefrag.setSaldo(saldo);
+        homefrag.setNome(nome);
     }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void storeSaldo(){
+        showDialogWithMessage(getString(R.string.load_saldo));
+
+        WebSaldo webSaldo = new WebSaldo();
+        webSaldo.call("get");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Double saldo) {
+        EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,saldo);
+        homefrag.setSaldo(saldo);
+
+        dismissDialog();
+    }
+
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Exception exception) {
+        dismissDialog();
+        showAlert(exception.getMessage());
+    }
+
 
     private void initToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -106,12 +152,18 @@ public class MainActivity extends AppCompatActivity implements HomeFragment.OnFr
     }
 
     @Override
-    public void onFragmentInteraction(Uri uri) {
+    public void onButtonFragmentInteraction() {
+        storeSaldo();
 
     }
 
     @Override
     public void onListFragmentInteraction(DummyContent.DummyItem item) {
+
+    }
+
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
     }
 }

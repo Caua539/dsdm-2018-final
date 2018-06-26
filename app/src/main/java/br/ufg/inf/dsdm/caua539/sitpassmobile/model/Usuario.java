@@ -4,13 +4,14 @@ public class Usuario {
 
     private String nome;
     private String cpf;
-    private int session;
+    private String session;
+    private double saldo;
 
     public String getNome() {
         return nome;
     }
 
-    public int getSession() {
+    public String getSession() {
         return session;
     }
 
@@ -18,7 +19,7 @@ public class Usuario {
         this.nome = nome;
     }
 
-    public void setSession(int session) {
+    public void setSession(String session) {
         this.session = session;
     }
 
@@ -29,5 +30,15 @@ public class Usuario {
     public void setCpf(String cpf) {
         this.cpf = cpf;
     }
+
+    public double getSaldo() {
+        return saldo;
+    }
+
+    public void setSaldo(double saldo) {
+        this.saldo = saldo;
+    }
+
+
 
 }

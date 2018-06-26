@@ -16,6 +16,7 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.MainActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebLogin;
 
+
 public class LoginActivity extends BaseActivity {
 
     private final int MIN_PASSWORD = 6;
@@ -83,11 +84,11 @@ public class LoginActivity extends BaseActivity {
 
     private void tryLogin(String password, String email) {
         WebLogin webLogin = new WebLogin(email,password);
-        webLogin.call();
+        webLogin.call("post");
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(Usuario user) {
+    public void onMessageEvent(Usuario user) throws InterruptedException {
         dismissDialog();
         storeCredentials(user);
         EasySharedPreferences.setBooleanToKey(this,EasySharedPreferences.KEY_LOGGEDIN,true);
@@ -97,11 +98,12 @@ public class LoginActivity extends BaseActivity {
     private void storeCredentials(Usuario user){
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_CPF,user.getCpf());
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_NAME,user.getNome());
-        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_SESSION,String.valueOf(user.getSession()));
+        EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,user.getSaldo());
+        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_SESSION,user.getSession());
     }
 
     private void goToHome() {
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
         finish();
     }

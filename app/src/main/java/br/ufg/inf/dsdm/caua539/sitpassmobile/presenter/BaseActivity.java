@@ -6,8 +6,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.afollestad.materialdialogs.MaterialDialog;
+
+import org.w3c.dom.Text;
 
 /**
  * Created by marceloquinta on 10/02/17.

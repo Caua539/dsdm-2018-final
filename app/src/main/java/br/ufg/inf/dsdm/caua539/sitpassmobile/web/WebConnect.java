@@ -23,16 +23,27 @@ public abstract class WebConnect {
         this.serviceName = "/"+serviceName;
     }
 
-    public void call() {
+    public void call(String type) {
         OkHttpClient client = new OkHttpClient();
 
         String url = getUrl();
-
-        RequestBody body = RequestBody.create(JSON, getRequestContent());
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
+        
+        Request request = null;
+        
+        if (type.equals("get")){
+            request = new Request.Builder()
+                    .url(url)
+                    .get()
+                    .build();
+        }
+        else if (type.equals("post")){
+            RequestBody body = RequestBody.create(JSON, getRequestContent());
+            request = new Request.Builder()
+                    .url(url)
+                    .post(body)
+                    .build();            
+        }
+        
 
         client.newCall(request).enqueue(new Callback() {
             @Override
