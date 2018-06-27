@@ -18,15 +18,16 @@ import org.greenrobot.eventbus.ThreadMode;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Eventosdb;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login.LoginActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebHistorico;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebSaldo;
 
-public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, HistoricoFragment.OnListFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener, HistoricoFragment.OnListFragmentInteractionListener {
 
     private HomeFragment homefrag;
     private RecargaFragment recargafrag;
@@ -88,6 +89,10 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         String nome = EasySharedPreferences.getStringFromKey(this, EasySharedPreferences.KEY_NAME);
         homefrag.setSaldo(saldo);
         homefrag.setNome(nome);
+
+        getHistorico();
+
+
     }
 
     @Override
@@ -123,6 +128,17 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         showAlert(exception.getMessage());
     }
 
+    private void getHistorico(){
+
+        WebHistorico webHistorico = new WebHistorico();
+        webHistorico.call("get");
+    }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void onMessageEvent(String ok) {
+        System.out.println(ok);
+    }
+
 
     private void initToolbar(){
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -154,6 +170,11 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     @Override
     public void onButtonFragmentInteraction() {
         storeSaldo();
+
+    }
+
+    @Override
+    public void onListFragmentInteraction(Eventosdb item) {
 
     }
 

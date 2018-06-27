@@ -36,7 +36,7 @@ public class RecargaFragment extends BaseFragment {
 
 
     private OnFragmentInteractionListener mListener;
-    private HistoricoFragment.OnListFragmentInteractionListener listListener;
+    private OnListFragmentInteractionListener listListener;
 
     public RecargaFragment() {
         // Required empty public constructor
@@ -121,6 +121,6 @@ public class RecargaFragment extends BaseFragment {
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyContent.DummyItem item);
+        void onListFragmentInteraction (DummyContent.DummyItem item);
     }
 }

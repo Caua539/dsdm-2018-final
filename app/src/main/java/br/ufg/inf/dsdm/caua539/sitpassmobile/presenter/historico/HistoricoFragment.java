@@ -9,10 +9,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Eventosdb;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.HistoricoRecyclerViewAdapter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent.DummyItem;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 
 /**
@@ -71,9 +73,18 @@ public class HistoricoFragment extends BaseFragment  {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(DummyContent.ITEMS, mListener));
+            List<Eventosdb> eventos = new ArrayList<>();
+            recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(eventos, mListener));
         }
         return view;
+    }
+
+    @Override
+    public void onResume(){
+        List<Eventosdb> eventos = Eventosdb.listAll(Eventosdb.class);
+        RecyclerView recyclerView = getView().findViewById(R.id.fragment_historico);
+        recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(eventos, mListener));
+        super.onResume();
     }
 
 
@@ -106,6 +117,6 @@ public class HistoricoFragment extends BaseFragment  {
      */
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(Eventosdb item);
     }
 }

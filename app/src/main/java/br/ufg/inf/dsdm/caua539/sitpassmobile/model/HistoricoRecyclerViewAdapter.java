@@ -8,21 +8,17 @@ import android.widget.TextView;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment.OnListFragmentInteractionListener;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent.DummyItem;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<HistoricoRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Eventosdb> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public HistoricoRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public HistoricoRecyclerViewAdapter(List<Eventosdb> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,8 +33,12 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mIdView.setText(mValues.get(position).id);
-        holder.mContentView.setText(mValues.get(position).content);
+        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        String data = df.format(holder.mItem.dia);
+
+        holder.mData.setText(data);
+        holder.mLocal.setText(holder.mItem.local);
+        holder.mValor.setText(String.valueOf(holder.mItem.valor));
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,20 +59,22 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mIdView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView mData;
+        public final TextView mLocal;
+        public final TextView mValor;
+        public Eventosdb mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mIdView = (TextView) view.findViewById(R.id.item_number);
-            mContentView = (TextView) view.findViewById(R.id.content);
+            mData = (TextView) view.findViewById(R.id.item_data);
+            mLocal = (TextView) view.findViewById(R.id.item_local);
+            mValor = (TextView) view.findViewById(R.id.item_valor);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + mData.getText() + "'";
         }
     }
 }

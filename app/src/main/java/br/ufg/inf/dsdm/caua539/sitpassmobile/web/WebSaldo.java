@@ -5,10 +5,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
 import okhttp3.Response;
 
 public class WebSaldo extends WebConnect {
@@ -21,14 +18,8 @@ public class WebSaldo extends WebConnect {
     }
 
     @Override
-    String getRequestContent() {
-        Map<String,String> requestMap = new HashMap<>();
-        requestMap.put("session", session);
-
-        JSONObject json = new JSONObject(requestMap);
-        String jsonString = json.toString();
-
-        return  jsonString;
+    public String getRequestContent() {
+        return "";
     }
 
     @Override

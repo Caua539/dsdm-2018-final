@@ -38,10 +38,6 @@ dependencies {
     //Material Dialog
     implementation 'com.afollestad.material-dialogs:core:0.9.6.0'
 
-    repositories {
-        mavenCentral()
-        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-    }
-
-    implementation 'com.michaelpardo:activeandroid:3.1.0-SNAPSHOT'
+    //SugarORM
+    implementation 'com.github.satyan:sugar:1.5'
 }

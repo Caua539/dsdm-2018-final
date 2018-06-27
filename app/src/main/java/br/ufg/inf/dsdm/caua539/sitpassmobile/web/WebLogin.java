@@ -24,7 +24,7 @@ public class WebLogin extends WebConnect {
     }
 
     @Override
-    String getRequestContent() {
+    public String getRequestContent() {
         Map<String,String> requestMap = new HashMap<>();
         requestMap.put("cpf", cpf);
         requestMap.put("senha", senha);
