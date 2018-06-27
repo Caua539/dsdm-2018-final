@@ -13,9 +13,14 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebSaldo;
 
 
 /**
@@ -27,8 +32,7 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
  * create an instance of this fragment.
  */
 public class HomeFragment extends BaseFragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
+
     private static final String ARG_NAVITEM = "navigation_item";
 
     private double saldo;
@@ -77,14 +81,25 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     public void onStart(){
-        setNome(nome);
-        setSaldo(saldo);
         super.onStart();
+        if (!EasySharedPreferences.getBooleanFromKey(
+                getContext(), EasySharedPreferences.KEY_LOGGEDIN)) {
+            return;
+        }
+        EventBus.getDefault().register(this);
+        storeSaldo();
 
+        nome = EasySharedPreferences.getStringFromKey(getContext(), EasySharedPreferences.KEY_NAME);
+        substitueTextVariable(nome, R.id.text_hello, R.string.home_hello);
     }
 
-    public void setSaldo(double saldo) {
-        this.saldo = saldo;
+    private void storeSaldo(){
+
+        WebSaldo webSaldo = new WebSaldo();
+        webSaldo.call("get");
+    }
+
+    public void setSaldo() {
 
         String saldoValue = String.format("%.2f", saldo);
         int numPassagens = (int)(saldo / MainActivity.valorPassagem);
@@ -92,11 +107,6 @@ public class HomeFragment extends BaseFragment {
 
         substitueTextVariable(saldoValue, R.id.text_saldo, R.string.home_saldo);
         substitueTextVariable(passagensValue, R.id.text_numeropass, R.string.home_numpass);
-    }
-
-    public void setNome (String nome){
-        this.nome = nome;
-        substitueTextVariable(this.nome, R.id.text_hello, R.string.home_hello);
     }
 
 
@@ -124,6 +134,13 @@ public class HomeFragment extends BaseFragment {
         String textNow = String.format(textBefore, text);
         textView.setText(textNow);
 
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onMessageEvent(Double saldo) {
+        EasySharedPreferences.setDoubleToKey(getContext(),EasySharedPreferences.KEY_SALDO,saldo);
+        this.saldo = saldo;
+        setSaldo();
     }
 
     /**

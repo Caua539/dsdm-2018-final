@@ -8,9 +8,10 @@ import java.util.List;
 
 public class Eventosdb extends SugarRecord{
 
+    @Unique
+    public int codigo;
     public String local;
     public double valor;
-    @Unique
     public Date dia;
 
     // True para recarga, False para viagens
@@ -20,8 +21,9 @@ public class Eventosdb extends SugarRecord{
 
     }
 
-    public Eventosdb(String local, double valor, Date dia, boolean tipo) {
+    public Eventosdb(int codigo, String local, double valor, Date dia, boolean tipo) {
         super();
+        this.codigo = codigo;
         this.local = local;
         this.valor = valor;
         this.dia = dia;

@@ -65,17 +65,16 @@ public class HistoricoFragment extends BaseFragment  {
         View view = inflater.inflate(R.layout.fragment_historico, container, false);
 
         // Set the adapter
-        if (view instanceof RecyclerView) {
-            Context context = view.getContext();
-            RecyclerView recyclerView = (RecyclerView) view;
-            if (mColumnCount <= 1) {
-                recyclerView.setLayoutManager(new LinearLayoutManager(context));
-            } else {
-                recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
-            }
-            List<Eventosdb> eventos = new ArrayList<>();
-            recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(eventos, mListener));
+        Context context = view.getContext();
+        RecyclerView recyclerView = (RecyclerView) view;
+        if (mColumnCount <= 1) {
+            recyclerView.setLayoutManager(new LinearLayoutManager(context));
+        } else {
+            recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
+        List<Eventosdb> eventos = new ArrayList<>();
+        recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(eventos, mListener));
+
         return view;
     }
 

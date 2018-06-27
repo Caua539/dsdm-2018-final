@@ -52,10 +52,11 @@ public class WebHistorico extends WebConnect {
         try {
             for (int i = 0; i < json.length(); i++){
                 JSONObject item = (JSONObject) json.get(i);
+                int codigo = item.getInt("codigo");
                 String local = item.getString("local");
                 double valor = item.getDouble("valor");
                 Date data = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(item.getString("data"));
-                Eventosdb evento = new Eventosdb(local, valor, data, tipo);
+                Eventosdb evento = new Eventosdb(codigo, local, valor, data, tipo);
                 evento.save();
             }
         } catch (ParseException e) {

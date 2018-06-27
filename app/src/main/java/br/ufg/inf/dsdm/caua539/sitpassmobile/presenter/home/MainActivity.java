@@ -84,12 +84,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             goToLogin();
             return;
         }
-        EventBus.getDefault().register(this);
-        double saldo = EasySharedPreferences.getDoubleFromKey(this, EasySharedPreferences.KEY_SALDO);
-        String nome = EasySharedPreferences.getStringFromKey(this, EasySharedPreferences.KEY_NAME);
-        homefrag.setSaldo(saldo);
-        homefrag.setNome(nome);
-
         getHistorico();
 
 
@@ -105,22 +99,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         super.onStop();
         EventBus.getDefault().unregister(this);
     }
-
-    private void storeSaldo(){
-        showDialogWithMessage(getString(R.string.load_saldo));
-
-        WebSaldo webSaldo = new WebSaldo();
-        webSaldo.call("get");
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onMessageEvent(Double saldo) {
-        EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,saldo);
-        homefrag.setSaldo(saldo);
-
-        dismissDialog();
-    }
-
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Exception exception) {
@@ -169,7 +147,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
     @Override
     public void onButtonFragmentInteraction() {
-        storeSaldo();
 
     }
 
