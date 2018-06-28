@@ -1,4 +1,4 @@
-package br.ufg.inf.dsdm.caua539.sitpassmobile.model;
+package br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities;
 
 
 

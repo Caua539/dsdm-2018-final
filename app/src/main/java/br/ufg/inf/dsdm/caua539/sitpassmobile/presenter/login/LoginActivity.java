@@ -11,7 +11,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.FormProblemException;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Usuario;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.MainActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebLogin;

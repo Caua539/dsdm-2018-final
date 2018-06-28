@@ -1,4 +1,4 @@
-package br.ufg.inf.dsdm.caua539.sitpassmobile.model;
+package br.ufg.inf.dsdm.caua539.sitpassmobile.model.RVAdapters;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -6,19 +6,23 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment.OnListFragmentInteractionListener;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.List;
 
-public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<HistoricoRecyclerViewAdapter.ViewHolder> {
+import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent.DummyItem;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment.OnListFragmentInteractionListener;
 
-    private final List<Eventosdb> mValues;
+/**
+ * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
+ * specified {@link OnListFragmentInteractionListener}.
+ * TODO: Replace the implementation with code for your data type.
+ */
+public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecyclerViewAdapter.ViewHolder> {
+
+    private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public HistoricoRecyclerViewAdapter(List<Eventosdb> items, OnListFragmentInteractionListener listener) {
+    public CartoesRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -26,19 +30,14 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_historico, parent, false);
+                .inflate(R.layout.item_cartao, parent, false);
         return new ViewHolder(view);
     }
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
-        String data = df.format(holder.mItem.dia);
-
-        holder.mData.setText(data);
-        holder.mLocal.setText(holder.mItem.local);
-        holder.mValor.setText(String.valueOf(holder.mItem.valor));
+        holder.mContentView.setText(mValues.get(position).content);
 
         holder.mView.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,22 +58,18 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mData;
-        public final TextView mLocal;
-        public final TextView mValor;
-        public Eventosdb mItem;
+        public final TextView mContentView;
+        public DummyItem mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mData = (TextView) view.findViewById(R.id.item_data);
-            mLocal = (TextView) view.findViewById(R.id.item_local);
-            mValor = (TextView) view.findViewById(R.id.item_valor);
+            mContentView = (TextView) view.findViewById(R.id.text_cartaoname);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mData.getText() + "'";
+            return super.toString() + " '" + mContentView.getText() + "'";
         }
     }
 }

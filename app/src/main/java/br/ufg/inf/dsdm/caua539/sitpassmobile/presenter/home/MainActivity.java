@@ -17,23 +17,22 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Eventosdb;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login.LoginActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebHistorico;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebSaldo;
 
 public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener, HistoricoFragment.OnListFragmentInteractionListener {
 
     private HomeFragment homefrag;
     private RecargaFragment recargafrag;
     private HistoricoFragment historicofrag;
-
-    public static final double valorPassagem = 4.05;
+    private TheDatabase busdb;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -65,6 +64,8 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
         initToolbar();
 
+        busdb.getDatabase(getApplicationContext());
+
         homefrag = HomeFragment.newInstance(R.id.navigation_home);
         recargafrag = RecargaFragment.newInstance(R.id.navigation_recarga);
         historicofrag = HistoricoFragment.newInstance(R.id.navigation_historico, 1);
@@ -84,7 +85,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             goToLogin();
             return;
         }
-        getHistorico();
 
 
     }
@@ -104,17 +104,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     public void onMessageEvent(Exception exception) {
         dismissDialog();
         showAlert(exception.getMessage());
-    }
-
-    private void getHistorico(){
-
-        WebHistorico webHistorico = new WebHistorico();
-        webHistorico.call("get");
-    }
-
-    @Subscribe(threadMode = ThreadMode.BACKGROUND)
-    public void onMessageEvent(String ok) {
-        System.out.println(ok);
     }
 
 
@@ -151,7 +140,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     }
 
     @Override
-    public void onListFragmentInteraction(Eventosdb item) {
+    public void onListFragmentInteraction(Evento item) {
 
     }
 

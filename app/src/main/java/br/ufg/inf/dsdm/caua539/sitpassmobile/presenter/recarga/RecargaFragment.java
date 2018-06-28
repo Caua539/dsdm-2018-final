@@ -16,9 +16,8 @@ import java.text.DecimalFormatSymbols;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.CartoesRecyclerViewAdapter;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.RVAdapters.CartoesRecyclerViewAdapter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment;
 
 
 /**

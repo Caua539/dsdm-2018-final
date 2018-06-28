@@ -1,15 +1,11 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.res.Resources;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -37,6 +33,7 @@ public class HomeFragment extends BaseFragment {
 
     private double saldo;
     private String nome;
+    public final double valorPassagem = 4.05;
 
 
     private OnFragmentInteractionListener mListener;
@@ -67,14 +64,6 @@ public class HomeFragment extends BaseFragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        ImageButton button = (ImageButton) view.findViewById(R.id.button_atualizasaldo);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                if (mListener != null) {
-                    mListener.onButtonFragmentInteraction();
-                }
-            }
-        });
 
         return view;
     }
@@ -87,13 +76,19 @@ public class HomeFragment extends BaseFragment {
             return;
         }
         EventBus.getDefault().register(this);
-        storeSaldo();
+        requestSaldo();
 
         nome = EasySharedPreferences.getStringFromKey(getContext(), EasySharedPreferences.KEY_NAME);
         substitueTextVariable(nome, R.id.text_hello, R.string.home_hello);
     }
 
-    private void storeSaldo(){
+    @Override
+    public void onStop(){
+        super.onStop();
+        EventBus.getDefault().unregister(this);
+    }
+
+    private void requestSaldo(){
 
         WebSaldo webSaldo = new WebSaldo();
         webSaldo.call("get");
@@ -102,7 +97,7 @@ public class HomeFragment extends BaseFragment {
     public void setSaldo() {
 
         String saldoValue = String.format("%.2f", saldo);
-        int numPassagens = (int)(saldo / MainActivity.valorPassagem);
+        int numPassagens = (int)(saldo / valorPassagem);
         String passagensValue = String.format("%d", numPassagens);
 
         substitueTextVariable(saldoValue, R.id.text_saldo, R.string.home_saldo);

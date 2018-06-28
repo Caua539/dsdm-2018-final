@@ -1,23 +1,27 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.web;
 
+import android.content.Context;
+
 import org.greenrobot.eventbus.EventBus;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Eventosdb;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Converters.DateConverter;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
 import okhttp3.Response;
 
 public class WebHistorico extends WebConnect {
     private static final String SERVICE = "historico";
+    private TheDatabase busdb;
 
-    public WebHistorico() {
+    public WebHistorico(Context context) {
         super(SERVICE);
+        createDb(context);
     }
 
     @Override
@@ -47,6 +51,10 @@ public class WebHistorico extends WebConnect {
 
     }
 
+    public void createDb(Context context){
+        busdb = (TheDatabase) TheDatabase.getDatabase(context);
+    }
+
     void extractEventoFromJson (JSONArray json, boolean tipo) {
 
         try {
@@ -55,13 +63,12 @@ public class WebHistorico extends WebConnect {
                 int codigo = item.getInt("codigo");
                 String local = item.getString("local");
                 double valor = item.getDouble("valor");
-                Date data = new SimpleDateFormat("dd-MM-yyyy HH:mm").parse(item.getString("data"));
-                Eventosdb evento = new Eventosdb(codigo, local, valor, data, tipo);
-                evento.save();
+                Date data = DateConverter.toDate(item.getString("data"));
+                Evento evento = new Evento(codigo, local, valor, data, tipo);
+                busdb.eventoDAO().insertEvento(evento);
+
             }
-        } catch (ParseException e) {
-            EventBus.getDefault().post(new Exception("A resposta do servidor não é válida"));
-        } catch (JSONException e) {
+        }  catch (JSONException e) {
             EventBus.getDefault().post(new Exception("A resposta do servidor não é válida"));
         }
 

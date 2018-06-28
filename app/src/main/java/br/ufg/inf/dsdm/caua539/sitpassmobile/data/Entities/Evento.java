@@ -1,14 +1,15 @@
-package br.ufg.inf.dsdm.caua539.sitpassmobile.model;
+package br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities;
 
-import com.orm.SugarRecord;
-import com.orm.dsl.Unique;
+
+import android.arch.persistence.room.Entity;
+import android.arch.persistence.room.PrimaryKey;
 
 import java.util.Date;
-import java.util.List;
 
-public class Eventosdb extends SugarRecord{
+@Entity
+public class Evento {
 
-    @Unique
+    @PrimaryKey
     public int codigo;
     public String local;
     public double valor;
@@ -17,12 +18,7 @@ public class Eventosdb extends SugarRecord{
     // True para recarga, False para viagens
     public boolean tipo;
 
-    public Eventosdb(){
-
-    }
-
-    public Eventosdb(int codigo, String local, double valor, Date dia, boolean tipo) {
-        super();
+    public Evento(int codigo, String local, double valor, Date dia, boolean tipo) {
         this.codigo = codigo;
         this.local = local;
         this.valor = valor;

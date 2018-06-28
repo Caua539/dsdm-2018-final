@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import br.ufg.inf.dsdm.caua539.sitpassmobile.model.Usuario;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Usuario;
 import okhttp3.Response;
 
 public class WebLogin extends WebConnect {
