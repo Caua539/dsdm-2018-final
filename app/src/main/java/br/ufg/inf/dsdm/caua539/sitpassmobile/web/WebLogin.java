@@ -43,8 +43,6 @@ public class WebLogin extends WebConnect {
             Usuario user = new Usuario();
             JSONObject object = new JSONObject(responseBody);
             user.setNome(object.getString("name"));
-            double saldo = (double) object.getInt("saldo");
-            user.setSaldo(saldo);
             user.setCpf(cpf);
             user.setSession(object.getString("session"));
             EventBus.getDefault().post(user);

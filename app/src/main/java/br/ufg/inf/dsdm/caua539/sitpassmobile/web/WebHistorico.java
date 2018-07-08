@@ -64,6 +64,10 @@ public class WebHistorico extends WebConnect {
                 String local = item.getString("local");
                 double valor = item.getDouble("valor");
                 Date data = DateConverter.toDate(item.getString("data"));
+
+                if (busdb.eventoDAO().getEventoByCodigo(codigo) != null) {
+                    continue;
+                }
                 Evento evento = new Evento(codigo, local, valor, data, tipo);
                 busdb.eventoDAO().insertEvento(evento);
 

@@ -85,8 +85,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             goToLogin();
             return;
         }
-
-
+        EventBus.getDefault().register(this);
     }
 
     @Override

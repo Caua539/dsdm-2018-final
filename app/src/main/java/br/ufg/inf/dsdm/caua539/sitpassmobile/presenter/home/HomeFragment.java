@@ -31,7 +31,7 @@ public class HomeFragment extends BaseFragment {
 
     private static final String ARG_NAVITEM = "navigation_item";
 
-    private double saldo;
+    private double saldo = 0.00;
     private String nome;
     public final double valorPassagem = 4.05;
 
@@ -75,11 +75,13 @@ public class HomeFragment extends BaseFragment {
                 getContext(), EasySharedPreferences.KEY_LOGGEDIN)) {
             return;
         }
+        nome = EasySharedPreferences.getStringFromKey(getContext(), EasySharedPreferences.KEY_NAME);
+        substitueTextVariable(nome, R.id.text_hello, R.string.home_hello);
+        setSaldo();
+
         EventBus.getDefault().register(this);
         requestSaldo();
 
-        nome = EasySharedPreferences.getStringFromKey(getContext(), EasySharedPreferences.KEY_NAME);
-        substitueTextVariable(nome, R.id.text_hello, R.string.home_hello);
     }
 
     @Override

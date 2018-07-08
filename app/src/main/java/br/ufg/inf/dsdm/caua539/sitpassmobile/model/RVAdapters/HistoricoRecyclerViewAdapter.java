@@ -1,11 +1,14 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.model.RVAdapters;
 
 import android.graphics.Color;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
@@ -19,6 +22,9 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
 
     private final List<Evento> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private boolean colorSelector = true;
+    private String red = "#d32f2f";
+    private String green = "#1B5E20";
 
     public HistoricoRecyclerViewAdapter(List<Evento> items, OnListFragmentInteractionListener listener) {
         mValues = items;
@@ -36,22 +42,35 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
 
-        DateFormat df = new SimpleDateFormat("dd-MM-yyyy HH:mm");
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy - HH:mm");
         String data = df.format(holder.mItem.dia);
 
         holder.mData.setText(data);
-        holder.mLocal.setText(holder.mItem.local);
-        holder.mValor.setText(String.format("R$ %.2f", holder.mItem.valor));
+
 
         if (holder.mItem.tipo){
-            holder.mData.setTextColor(Color.GREEN);
-            holder.mLocal.setTextColor(Color.GREEN);
-            holder.mValor.setTextColor(Color.GREEN);
+            holder.mTipo.setText("REC:");
+            holder.mTipo.setTextColor(Color.parseColor(green));
+            holder.mValor.setText(String.format("+ R$ %.2f", holder.mItem.valor));
+            holder.mValor.setTextColor(Color.parseColor(green));
+            holder.mLocal.setText(String.format("Local: %s",holder.mItem.local));
         }
         else {
-            holder.mData.setTextColor(Color.RED);
-            holder.mLocal.setTextColor(Color.RED);
-            holder.mValor.setTextColor(Color.RED);
+            holder.mTipo.setText("DÉB:");
+            holder.mTipo.setTextColor(Color.parseColor(red));
+            holder.mValor.setText(String.format("- R$ %.2f", holder.mItem.valor));
+            holder.mValor.setTextColor(Color.parseColor(red));
+            holder.mLocal.setText(String.format("Ônibus: %s",holder.mItem.local));
+        }
+
+        if (colorSelector) {
+            colorSelector = false;
+            holder.mView.setBackgroundResource(R.drawable.image_border_color);
+            holder.mData.setTextColor(Color.WHITE);
+            holder.mLocal.setTextColor(Color.WHITE);
+        }
+        else {
+            colorSelector = true;
         }
 
 
@@ -74,6 +93,7 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
+        public final TextView mTipo;
         public final TextView mData;
         public final TextView mLocal;
         public final TextView mValor;
@@ -82,6 +102,7 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
         public ViewHolder(View view) {
             super(view);
             mView = view;
+            mTipo = (TextView) view.findViewById(R.id.item_tipotransac);
             mData = (TextView) view.findViewById(R.id.item_data);
             mLocal = (TextView) view.findViewById(R.id.item_local);
             mValor = (TextView) view.findViewById(R.id.item_valor);

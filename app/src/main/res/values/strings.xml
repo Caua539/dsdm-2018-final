@@ -5,7 +5,7 @@
     <string name="hint_pass">Senha</string>
     <string name="button_entrar">Entrar</string>
     <string name="imgdesc_logo">Sitpass Logo</string>
-    <string name="button_fgtpass"><a href="http://pudim.com.br/">Esqueceu a senha?</a></string>
+    <string name="button_fgtpass"><a href="http://www.juventude.go.gov.br/ple/ple-login.html">Esqueceu a senha?</a></string>
 
     <string name="load_login">Verificando credenciais</string>
     <string name="load_saldo">Atualizando saldo</string>
@@ -31,5 +31,5 @@
     <string name="recarga_cartaoimgdesc">Cartão</string>
 
     <string name="historico_titulo">Histórico de Transações</string>
-    <string name="historico_perdido">Cartão perdido ou roubado?</string>
+    <string name="historico_perdido"><a href="http://www.sitpass.com.br/portalsitpass/portalusuariopf/login.html">Cartão perdido ou roubado?</a></string>
 </resources>

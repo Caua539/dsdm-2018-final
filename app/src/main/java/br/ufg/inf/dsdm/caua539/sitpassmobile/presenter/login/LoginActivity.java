@@ -2,7 +2,9 @@ package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.LinkMovementMethod;
 import android.view.View;
+import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -29,6 +31,9 @@ public class LoginActivity extends BaseActivity {
 
         setStringFromEdit(R.id.input_email,EasySharedPreferences.getStringFromKey(
                 this, EasySharedPreferences.KEY_CPF));
+
+        TextView t2 = (TextView) findViewById(R.id.link_fgtpass);
+        t2.setMovementMethod(LinkMovementMethod.getInstance());
     }
 
     @Override
@@ -98,7 +103,7 @@ public class LoginActivity extends BaseActivity {
     private void storeCredentials(Usuario user){
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_CPF,user.getCpf());
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_NAME,user.getNome());
-        EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,user.getSaldo());
+        EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,0.00);
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_SESSION,user.getSession());
     }
 

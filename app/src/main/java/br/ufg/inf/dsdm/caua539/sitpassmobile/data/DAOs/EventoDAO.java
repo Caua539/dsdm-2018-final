@@ -20,6 +20,9 @@ public interface EventoDAO {
     @Query("select * from Evento order by codigo desc")
     LiveData<List<Evento>> listAllEventosByCodigo();
 
+    @Query("SELECT * FROM Evento WHERE codigo=:codigo")
+    Evento getEventoByCodigo(int codigo);
+
     @Query("DELETE FROM Evento")
     void deleteAll();
 

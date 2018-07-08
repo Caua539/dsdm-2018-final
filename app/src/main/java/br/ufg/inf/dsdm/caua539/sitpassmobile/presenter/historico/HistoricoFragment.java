@@ -9,9 +9,11 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.method.LinkMovementMethod;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -85,6 +87,8 @@ public class HistoricoFragment extends BaseFragment  {
             recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
         }
         subscribeUiEventos();
+        TextView t2 = (TextView) view.findViewById(R.id.link_cartaoperdido);
+        t2.setMovementMethod(LinkMovementMethod.getInstance());
 
         return view;
     }

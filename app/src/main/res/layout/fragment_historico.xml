@@ -10,32 +10,17 @@
     tools:context=".presenter.historico.HistoricoFragment"
     tools:listitem="@layout/item_historico">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/fragment_historico"
-        android:layout_width="0dp"
-        android:layout_height="369dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/image_border"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_histtitulo"
-        tools:listitem="@layout/item_historico" />
-
     <TextView
         android:id="@+id/link_cartaoperdido"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
-        android:layout_marginTop="8dp"
-        android:autoLink="web"
+        android:layout_marginBottom="16dp"
         android:text="@string/historico_perdido"
         android:textColor="@color/colorSecondary"
         android:textColorLink="@color/colorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/fragment_historico" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/text_histtitulo"
@@ -47,4 +32,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/container_recyclerhist"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/image_border"
+        app:layout_constraintBottom_toTopOf="@+id/link_cartaoperdido"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/text_histtitulo">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fragment_historico"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="3dp"
+            android:layout_marginEnd="1dp"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="3dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_historico" />
+    </android.support.constraint.ConstraintLayout>
 </android.support.constraint.ConstraintLayout>
