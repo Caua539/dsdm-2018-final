@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "263913af5435ef10c56d567b176a1155",
+    "identityHash": "5e1525e195a799503c68221fd9f49585",
     "entities": [
       {
         "tableName": "Evento",
@@ -50,7 +50,7 @@
       },
       {
         "tableName": "Cartao",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `pan` TEXT, `nome` TEXT, `cvv` INTEGER NOT NULL, `validade` TEXT, `bandeira` TEXT, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `pan` TEXT, `nome` TEXT, `cvv` INTEGER NOT NULL, `validade` TEXT, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -81,12 +81,6 @@
             "columnName": "validade",
             "affinity": "TEXT",
             "notNull": false
-          },
-          {
-            "fieldPath": "bandeira",
-            "columnName": "bandeira",
-            "affinity": "TEXT",
-            "notNull": false
           }
         ],
         "primaryKey": {
@@ -101,7 +95,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"263913af5435ef10c56d567b176a1155\")"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, \"5e1525e195a799503c68221fd9f49585\")"
     ]
   }
 }

@@ -99,7 +99,7 @@ public class RecargaFragment extends BaseFragment {
     }
 
     public Cartao newCartao(){
-        Cartao cartao = new Cartao(9999,"", "", 0, new Date(), "");
+        Cartao cartao = new Cartao(9999,"", "", 0, new Date());
         return cartao;
     }
 
@@ -113,9 +113,17 @@ public class RecargaFragment extends BaseFragment {
     }
 
     private void showCartoesInUI(final @NonNull List<Cartao> cartoes){
-        if (cartoes.isEmpty()){
+        boolean newCardAlready = false;
+        for (int i =0; i < cartoes.size(); i++){
+            if (cartoes.get(i).id == 9999){
+                newCardAlready = true;
+                break;
+            }
+        }
+        if (!newCardAlready){
             cartoes.add(newCartao());
         }
+
         RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerview_cartoes);
         recyclerView.setAdapter(new CartoesRecyclerViewAdapter(RecargaFragment.this, cartoes, listListener));
     }

@@ -17,14 +17,12 @@ public class Cartao {
     public String nome;
     public int cvv;
     public Date validade;
-    public String bandeira;
 
-    public Cartao(int id, String pan, String nome, int cvv, Date validade, String bandeira) {
+    public Cartao(int id, String pan, String nome, int cvv, Date validade) {
         this.id = id;
         this.pan = pan;
         this.nome = nome;
         this.cvv = cvv;
         this.validade = validade;
-        this.bandeira = bandeira;
     }
 }
