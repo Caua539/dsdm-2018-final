@@ -29,12 +29,7 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.model.ViewModel.EventosByCodigoView
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebHistorico;
 
-/**
- * A fragment representing a list of Items.
- * <p/>
- * Activities containing this fragment MUST implement the {@link OnListFragmentInteractionListener}
- * interface.
- */
+
 public class HistoricoFragment extends BaseFragment  {
 
     private static final String ARG_COLUMN_COUNT = "column-count";
@@ -42,8 +37,6 @@ public class HistoricoFragment extends BaseFragment  {
 
     private int mColumnCount = 1;
     private EventosByCodigoViewModel viewModel;
-
-    private OnListFragmentInteractionListener mListener;
 
     /**
      * Mandatory empty constructor for the fragment manager to instantiate the
@@ -123,7 +116,7 @@ public class HistoricoFragment extends BaseFragment  {
 
     private void showEventosInUi(final @NonNull List<Evento> eventos) {
         RecyclerView recyclerView = getActivity().findViewById(R.id.fragment_historico);
-        recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(eventos, mListener));
+        recyclerView.setAdapter(new HistoricoRecyclerViewAdapter(eventos));
     }
 
     private void requestHistorico(){
@@ -135,38 +128,16 @@ public class HistoricoFragment extends BaseFragment  {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        if (context instanceof OnListFragmentInteractionListener) {
-            mListener = (OnListFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnListFragmentInteractionListener");
-        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void onMessageEvent(String ok) {
 
         System.out.println(ok);
-    }
-
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p/>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnListFragmentInteractionListener {
-        // TODO: Update argument type and name
-        void onListFragmentInteraction(Evento item);
     }
 }

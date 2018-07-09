@@ -8,11 +8,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment.OnListFragmentInteractionListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -21,14 +18,12 @@ import java.util.List;
 public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<HistoricoRecyclerViewAdapter.ViewHolder> {
 
     private final List<Evento> mValues;
-    private final OnListFragmentInteractionListener mListener;
     private boolean colorSelector = true;
     private String red = "#d32f2f";
     private String green = "#1B5E20";
 
-    public HistoricoRecyclerViewAdapter(List<Evento> items, OnListFragmentInteractionListener listener) {
+    public HistoricoRecyclerViewAdapter(List<Evento> items) {
         mValues = items;
-        mListener = listener;
     }
 
     @Override
@@ -72,18 +67,6 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
         else {
             colorSelector = true;
         }
-
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
-                }
-            }
-        });
     }
 
     @Override

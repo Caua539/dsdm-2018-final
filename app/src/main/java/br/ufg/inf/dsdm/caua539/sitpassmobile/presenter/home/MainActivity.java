@@ -17,6 +17,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
@@ -24,10 +25,11 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login.LoginActivity;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.NewCardActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebHistorico;
 
-public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener, HistoricoFragment.OnListFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener {
 
     private HomeFragment homefrag;
     private RecargaFragment recargafrag;
@@ -45,12 +47,15 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     replaceView(homefrag);
+                    getSupportActionBar().setTitle("Início");
                     return true;
                 case R.id.navigation_recarga:
                     replaceView(recargafrag);
+                    getSupportActionBar().setTitle("Recarga");
                     return true;
                 case R.id.navigation_historico:
                     replaceView(historicofrag);
+                    getSupportActionBar().setTitle("Histórico de Transações");
                     return true;
             }
             return false;
@@ -62,7 +67,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        initToolbar();
+        initToolbar(R.id.toolbar, "Início");
 
         busdb.getDatabase(getApplicationContext());
 
@@ -88,10 +93,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         EventBus.getDefault().register(this);
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
 
     @Override
     protected void onStop() {
@@ -105,12 +106,6 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         showAlert(exception.getMessage());
     }
 
-
-    private void initToolbar(){
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
-    }
 
     public void initView(HomeFragment fragment){
         fragmentManager = getSupportFragmentManager();
@@ -139,17 +134,14 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     }
 
     @Override
-    public void onListFragmentInteraction(Evento item) {
-
-    }
-
-    @Override
-    public void onListFragmentInteraction(DummyContent.DummyItem item) {
-
-    }
-
-    @Override
     public void onFragmentInteraction(Uri uri) {
 
+    }
+
+    @Override
+    public void onNewCardInteraction() {
+        System.out.println("Cartão escolhido!");
+        Intent intent = new Intent(this, NewCardActivity.class);
+        startActivity(intent);
     }
 }

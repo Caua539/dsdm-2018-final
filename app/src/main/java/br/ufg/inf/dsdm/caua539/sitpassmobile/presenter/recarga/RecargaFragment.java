@@ -1,8 +1,12 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga;
 
+import android.arch.lifecycle.Observer;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -13,10 +17,13 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.text.DecimalFormatSymbols;
+import java.util.Date;
+import java.util.List;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.RVAdapters.CartoesRecyclerViewAdapter;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.model.ViewModel.CartoesViewModel;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 
 
@@ -36,6 +43,7 @@ public class RecargaFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
     private OnListFragmentInteractionListener listListener;
+    private CartoesViewModel viewModel;
 
     public RecargaFragment() {
         // Required empty public constructor
@@ -55,28 +63,32 @@ public class RecargaFragment extends BaseFragment {
         if (getArguments() != null) {
             navigation_item = getArguments().getInt(ARG_NAVITEM);
         }
+        viewModel = ViewModelProviders.of(this).get(CartoesViewModel.class);
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_recarga, container, false);
 
-
         LinearLayoutManager horizontalLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         RecyclerView recyclerView = view.findViewById(R.id.recyclerview_cartoes);
         recyclerView.setLayoutManager(horizontalLayoutManager);
-        recyclerView.setAdapter(new CartoesRecyclerViewAdapter(DummyContent.ITEMS, listListener));
+        subscribeUiCartoes();
 
         //Definição de separador de decimais por localidade
         EditText input = view.findViewById(R.id.input_valor);
         char separator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
         input.setKeyListener(DigitsKeyListener.getInstance("0123456789" + separator));
 
-
-
         return view;
+    }
+
+    @Override
+    public void onStart(){
+        super.onStart();
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -84,6 +96,28 @@ public class RecargaFragment extends BaseFragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public Cartao newCartao(){
+        Cartao cartao = new Cartao(9999,"", "", 0, new Date(), "");
+        return cartao;
+    }
+
+    private void subscribeUiCartoes() {
+        viewModel.cartoes.observe(this, new Observer<List<Cartao>>() {
+            @Override
+            public void onChanged(@Nullable List<Cartao> cartoes) {
+                showCartoesInUI(cartoes);
+            }
+        });
+    }
+
+    private void showCartoesInUI(final @NonNull List<Cartao> cartoes){
+        if (cartoes.isEmpty()){
+            cartoes.add(newCartao());
+        }
+        RecyclerView recyclerView = getActivity().findViewById(R.id.recyclerview_cartoes);
+        recyclerView.setAdapter(new CartoesRecyclerViewAdapter(RecargaFragment.this, cartoes, listListener));
     }
 
     @Override
@@ -95,24 +129,22 @@ public class RecargaFragment extends BaseFragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnFragmentInteractionListener");
         }
+
+        if (context instanceof OnListFragmentInteractionListener){
+            listListener = (OnListFragmentInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnListFragmentInteractionListener");
+        }
     }
 
     @Override
     public void onDetach() {
         super.onDetach();
         mListener = null;
+        listListener = null;
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
@@ -120,6 +152,6 @@ public class RecargaFragment extends BaseFragment {
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction (DummyContent.DummyItem item);
+        void onNewCardInteraction ();
     }
 }

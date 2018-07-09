@@ -31,6 +31,19 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <ImageView
+        android:id="@+id/img_applogo"
+        android:layout_width="55dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="8dp"
+        android:layout_marginTop="8dp"
+        android:contentDescription="@string/imgdesc_logo"
+        android:tint="@color/colorWhite"
+        app:layout_constraintBottom_toTopOf="@+id/container_frag"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/transportbusicon" />
+
     <FrameLayout
         android:id="@+id/container_frag"
         android:layout_width="0dp"

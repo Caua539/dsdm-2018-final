@@ -1,17 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="10dp">
 
-    <ImageView
-        android:id="@+id/colorView"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:contentDescription="@string/recarga_cartaoimgdesc"
-        android:src="@drawable/ic_payment_icon" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/cartaoView"
+            android:layout_width="75dp"
+            android:layout_height="75dp"
+            android:contentDescription="@string/recarga_cartaoimgdesc"
+            android:src="@drawable/ic_payment_icon" />
+
+        <ImageView
+            android:id="@+id/icon_newcard"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_gravity="end"
+            android:contentDescription="@string/desc_newcard"
+            app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
+    </FrameLayout>
 
     <TextView
         android:id="@+id/text_cartaoname"

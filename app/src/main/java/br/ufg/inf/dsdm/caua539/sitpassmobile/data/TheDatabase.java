@@ -9,15 +9,18 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.CartaoDAO;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.EventoDAO;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Converters.DateConverter;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
 
-@Database(entities = {Evento.class}, version = 1)
+@Database(entities = {Evento.class, Cartao.class}, version = 2)
 @TypeConverters(DateConverter.class)
 public abstract class TheDatabase extends RoomDatabase {
 
     public abstract EventoDAO eventoDAO();
+    public abstract CartaoDAO cartaoDAO();
 
     private static TheDatabase INSTANCE;
 
@@ -29,6 +32,7 @@ public abstract class TheDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TheDatabase.class, "database")
                             .addCallback(sRoomDatabaseCallback)
+                            .fallbackToDestructiveMigration()
                             .build();
 
                 }
@@ -50,15 +54,18 @@ public abstract class TheDatabase extends RoomDatabase {
 
     private static class CleanDbAsync extends AsyncTask<Void, Void, Void> {
 
-        private final EventoDAO mDao;
+        private final EventoDAO fDao;
+        private final CartaoDAO sDao;
 
         CleanDbAsync(TheDatabase db) {
-            mDao = db.eventoDAO();
+            fDao = db.eventoDAO();
+            sDao = db.cartaoDAO();
         }
 
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.deleteAll();
+            fDao.deleteAll();
+            sDao.deleteAll();
             return null;
         }
     }

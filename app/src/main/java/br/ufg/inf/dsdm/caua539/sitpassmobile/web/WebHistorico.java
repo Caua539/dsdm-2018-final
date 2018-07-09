@@ -13,15 +13,16 @@ import java.util.Date;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Converters.DateConverter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.MainActivity;
 import okhttp3.Response;
 
 public class WebHistorico extends WebConnect {
     private static final String SERVICE = "historico";
-    private TheDatabase busdb;
+    private final TheDatabase busdb;
 
     public WebHistorico(Context context) {
         super(SERVICE);
-        createDb(context);
+        busdb = createDb(context);
     }
 
     @Override
@@ -51,8 +52,8 @@ public class WebHistorico extends WebConnect {
 
     }
 
-    public void createDb(Context context){
-        busdb = (TheDatabase) TheDatabase.getDatabase(context);
+    public TheDatabase createDb(Context context){
+        return (TheDatabase) TheDatabase.getDatabase(context);
     }
 
     void extractEventoFromJson (JSONArray json, boolean tipo) {

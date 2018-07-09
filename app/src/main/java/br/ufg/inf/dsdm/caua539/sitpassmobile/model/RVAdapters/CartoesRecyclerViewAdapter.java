@@ -4,25 +4,22 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.List;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent.DummyItem;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment.OnListFragmentInteractionListener;
 
-/**
- * {@link RecyclerView.Adapter} that can display a {@link DummyItem} and makes a call to the
- * specified {@link OnListFragmentInteractionListener}.
- * TODO: Replace the implementation with code for your data type.
- */
 public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecyclerViewAdapter.ViewHolder> {
 
-    private final List<DummyItem> mValues;
+    private final List<Cartao> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public CartoesRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public CartoesRecyclerViewAdapter(RecargaFragment fragment, List<Cartao> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -37,18 +34,23 @@ public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecy
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
         holder.mItem = mValues.get(position);
-        holder.mContentView.setText(mValues.get(position).content);
-
-        holder.mView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (null != mListener) {
-                    // Notify the active callbacks interface (the activity, if the
-                    // fragment is attached to one) that an item has been selected.
-                    mListener.onListFragmentInteraction(holder.mItem);
+        if (holder.mItem.id == 9999) {
+            holder.nomeCartao.setText("Novo...");
+            holder.newCartao.setVisibility(View.VISIBLE);
+            holder.newCartao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        mListener.onNewCardInteraction();
+                    }
                 }
-            }
-        });
+            });
+
+        }
+        else {
+            holder.nomeCartao.setText(String.format("%s %s", "Final", holder.mItem.pan.split(" ")[3]));
+        }
+
     }
 
     @Override
@@ -58,18 +60,20 @@ public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecy
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mContentView;
-        public DummyItem mItem;
+        public final TextView nomeCartao;
+        public final ImageView newCartao;
+        public Cartao mItem;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mContentView = (TextView) view.findViewById(R.id.text_cartaoname);
+            nomeCartao = view.findViewById(R.id.text_cartaoname);
+            newCartao = view.findViewById(R.id.icon_newcard);
         }
 
         @Override
         public String toString() {
-            return super.toString() + " '" + mContentView.getText() + "'";
+            return super.toString() + " '" + nomeCartao.getText() + "'";
         }
     }
 }
