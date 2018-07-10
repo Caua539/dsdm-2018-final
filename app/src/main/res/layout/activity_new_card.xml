@@ -38,18 +38,17 @@
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/layout_inputcartaonome"
+        app:layout_constraintBottom_toTopOf="@+id/buttonGravar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar2" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_inputcartaonome" />
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/buttonGravar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"
-        android:text="Button"
+        android:text="@string/button_gravarcartao"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -58,12 +57,12 @@
         android:id="@+id/layout_inputcartaonome"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="124dp"
         android:layout_marginStart="8dp"
-        app:layout_constraintBottom_toTopOf="@+id/button"
+        android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.515"
-        app:layout_constraintStart_toEndOf="@+id/imageView">
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/iconPerson"
+        app:layout_constraintTop_toBottomOf="@+id/toolbar2">
 
         <android.support.design.widget.TextInputEditText
             android:id="@+id/CartaoNomeEditText"
@@ -73,11 +72,12 @@
     </android.support.design.widget.TextInputLayout>
 
     <ImageView
-        android:id="@+id/imageView"
+        android:id="@+id/iconPerson"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
+        android:contentDescription="@string/icon_person"
         android:tint="#7d7d7d"
         app:layout_constraintBottom_toBottomOf="@+id/layout_inputcartaonome"
         app:layout_constraintStart_toStartOf="parent"

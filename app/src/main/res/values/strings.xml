@@ -38,4 +38,6 @@
     <string name="GravarCartao">Gravar</string>
     <string name="CartaoValido">Formulário é valido!</string>
     <string name="CartaoInvalido">Formulário não é válido!</string>
+    <string name="button_gravarcartao">Gravar</string>
+    <string name="icon_person">Ícone de uma pessoa</string>
 </resources>

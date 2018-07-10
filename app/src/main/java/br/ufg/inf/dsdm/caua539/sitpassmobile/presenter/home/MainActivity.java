@@ -15,6 +15,9 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.security.SecureRandom;
+import java.util.Random;
+
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
@@ -35,6 +38,9 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
     private RecargaFragment recargafrag;
     private HistoricoFragment historicofrag;
     private TheDatabase busdb;
+
+    Random secure = new SecureRandom();
+    public static char[] key;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -67,9 +73,22 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
+        key = EasySharedPreferences.getCharFromKey(getApplicationContext(), EasySharedPreferences.KEY_PASS);
+        if (key == null){
+            String alphabet = "abcdefghijklmnopqrstuvxywz1234567890";
+            char[] c = new char[20];
+            for (int i = 0; i < 20; i++){
+                int j = secure.nextInt(alphabet.length());
+                c[i] = alphabet.charAt(j);
+            }
+
+            key = c;
+            EasySharedPreferences.setCharToKey(getApplicationContext(), EasySharedPreferences.KEY_PASS, key);
+        }
+
         initToolbar(R.id.toolbar, "Início");
 
-        busdb.getDatabase(getApplicationContext());
+        TheDatabase.getDatabase(getApplicationContext());
 
         homefrag = HomeFragment.newInstance(R.id.navigation_home);
         recargafrag = RecargaFragment.newInstance(R.id.navigation_recarga);
@@ -77,7 +96,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
         initView(homefrag);
 
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
 
     }

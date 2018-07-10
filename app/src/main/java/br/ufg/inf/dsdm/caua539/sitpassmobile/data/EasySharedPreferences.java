@@ -4,10 +4,6 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.preference.PreferenceManager;
 
-/**
- * Created by marceloquinta on 10/02/17.
- */
-
 public class EasySharedPreferences {
 
     public static String KEY_NAME = "nome";
@@ -15,6 +11,7 @@ public class EasySharedPreferences {
     public static String KEY_SALDO = "saldo";
     public static String KEY_SESSION = "session";
     public static String KEY_LOGGEDIN = "loggedin";
+    public static String KEY_PASS = "pass";
 
     public static String getStringFromKey(Context context, String key){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -27,6 +24,27 @@ public class EasySharedPreferences {
         editor.putString(key,value);
         editor.commit();
     }
+
+
+    public static void setCharToKey (Context context, String key, char[] value){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        SharedPreferences.Editor editor = pref.edit();
+        String pass = value.toString();
+        editor.putString(key,pass);
+        editor.commit();
+    }
+
+
+    public static char[] getCharFromKey(Context context, String key){
+        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
+        String s = pref.getString(key, "");
+        if (s == ""){
+            return null;
+        }
+        char[] pass = s.toCharArray();
+        return pass;
+    }
+
 
     public static double getDoubleFromKey(Context context, String key) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);

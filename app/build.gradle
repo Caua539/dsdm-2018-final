@@ -59,6 +59,13 @@ dependencies {
     //CardForm
     implementation 'com.braintreepayments:card-form:3.3.0'
 
+    repositories {
+        maven {
+            url "https://s3.amazonaws.com/repo.commonsware.com"
+        }
+    }
+    implementation "com.commonsware.cwac:saferoom:0.4.4"
+
 
 
 

@@ -2,6 +2,8 @@ package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.braintreepayments.cardform.OnCardFormSubmitListener;
@@ -37,6 +39,14 @@ public class NewCardActivity extends BaseActivity implements OnCardFormSubmitLis
                 .setup(this);
         mCardForm.setOnCardFormSubmitListener(this);
 
+        Button gravar = (Button) findViewById(R.id.buttonGravar);
+        gravar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onCardFormSubmit();
+            }
+        });
+
     }
 
     @Override
@@ -48,4 +58,8 @@ public class NewCardActivity extends BaseActivity implements OnCardFormSubmitLis
             Toast.makeText(this, R.string.CartaoInvalido, Toast.LENGTH_SHORT).show();
         }
     }
+
+
+
+
 }

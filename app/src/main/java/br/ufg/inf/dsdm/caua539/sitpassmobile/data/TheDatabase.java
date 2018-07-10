@@ -9,13 +9,16 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 
+import com.commonsware.cwac.saferoom.SafeHelperFactory;
+
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.CartaoDAO;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.EventoDAO;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Converters.DateConverter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home.MainActivity;
 
-@Database(entities = {Evento.class, Cartao.class}, version = 2)
+@Database(entities = {Evento.class, Cartao.class}, version = 4)
 @TypeConverters(DateConverter.class)
 public abstract class TheDatabase extends RoomDatabase {
 
@@ -29,9 +32,11 @@ public abstract class TheDatabase extends RoomDatabase {
         if (INSTANCE == null) {
             synchronized (TheDatabase.class) {
                 if (INSTANCE == null) {
+                    //SafeHelperFactory factory = new SafeHelperFactory(MainActivity.key);
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                             TheDatabase.class, "database")
                             .addCallback(sRoomDatabaseCallback)
+                            //.openHelperFactory(factory)
                             .fallbackToDestructiveMigration()
                             .build();
 
