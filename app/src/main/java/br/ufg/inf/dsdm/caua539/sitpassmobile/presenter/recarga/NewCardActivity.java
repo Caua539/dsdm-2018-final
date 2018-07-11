@@ -42,7 +42,6 @@ public class NewCardActivity extends BaseActivity implements OnCardFormSubmitLis
                 .maskCvv(true)
                 .expirationRequired(true)
                 .cvvRequired(true)
-                .postalCodeRequired(true)
                 .actionLabel(getString(R.string.GravarCartao))
                 .setup(this);
         mCardForm.setOnCardFormSubmitListener(this);

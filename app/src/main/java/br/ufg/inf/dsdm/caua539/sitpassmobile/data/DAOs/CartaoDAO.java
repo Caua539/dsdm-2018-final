@@ -20,6 +20,9 @@ public interface CartaoDAO {
     @Query("SELECT * FROM Cartao WHERE id=:id")
     Cartao getCartaoByCodigo(int id);
 
+    @Query("SELECT id FROM Cartao WHERE id=(SELECT max(id) FROM Cartao)")
+    int getBiggerId();
+
     @Query("DELETE FROM Cartao")
     void deleteAll();
 
