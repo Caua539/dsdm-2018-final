@@ -20,11 +20,14 @@ public interface CartaoDAO {
     @Query("SELECT * FROM Cartao WHERE id=:id")
     Cartao getCartaoByCodigo(int id);
 
-    @Query("SELECT id FROM Cartao WHERE id=(SELECT max(id) FROM Cartao)")
-    int getBiggerId();
+    @Query("SELECT * FROM Cartao WHERE pan=:pan")
+    Cartao getCartaoByNumero(String pan);
 
     @Query("DELETE FROM Cartao")
     void deleteAll();
+
+    @Query("DELETE FROM Cartao WHERE id=:id")
+    void deleteCartao(int id);
 
     @Insert(onConflict = IGNORE)
     void insertCartao(Cartao cartao);

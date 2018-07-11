@@ -7,18 +7,16 @@ import android.arch.persistence.room.PrimaryKey;
 @Entity
 public class Cartao {
 
-    public static int geraId = 0;
     @PrimaryKey
     public int id;
     public String pan;
     public String end;
     public String nome;
-    public int cvv;
+    public String cvv;
     public String validade;
 
-    public Cartao(String pan, String nome, String end, int cvv, String validade) {
-        geraId++;
-        this.id = geraId;
+    public Cartao(int id, String pan, String nome, String end, String cvv, String validade) {
+        this.id = id;
         this.pan = pan;
         this.end = end;
         this.nome = nome;

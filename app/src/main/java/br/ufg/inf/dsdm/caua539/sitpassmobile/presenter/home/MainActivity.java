@@ -1,24 +1,34 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.security.SecureRandom;
-import java.util.Random;
+import java.lang.ref.WeakReference;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.CartaoDAO;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.EventoDAO;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EncUtil;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
@@ -27,15 +37,13 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login.LoginActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.NewCardActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
 
-public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener {
+public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener, RecargaFragment.OnButtonInteractionListener {
 
     private HomeFragment homefrag;
     private RecargaFragment recargafrag;
     private HistoricoFragment historicofrag;
-    private TheDatabase busdb;
+    private ImageView logout;
 
-    Random secure = new SecureRandom();
-    public static char[] key;
 
     FragmentManager fragmentManager;
     FragmentTransaction fragmentTransaction;
@@ -79,6 +87,22 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         historicofrag = HistoricoFragment.newInstance(R.id.navigation_historico, 1);
 
         initView(homefrag);
+
+        logout = findViewById(R.id.img_logouticon);
+        logout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new AlertDialog.Builder(MainActivity.this)
+                        .setTitle("Log Out")
+                        .setMessage("Deseja realmente sair?")
+                        .setIcon(android.R.drawable.ic_dialog_alert)
+                        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int whichButton) {
+                                dologout();
+                            }})
+                        .setNegativeButton(android.R.string.no, null).show();
+            }
+        });
 
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -125,6 +149,16 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         fragmentTransaction.commit();
     }
 
+    private void dologout(){
+        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_CPF,"");
+        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_NAME,"");
+        EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,0);
+        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_SESSION,"");
+        EasySharedPreferences.setBooleanToKey(this,EasySharedPreferences.KEY_LOGGEDIN,false);
+        new CleanDbAsync(TheDatabase.getDatabase(getApplicationContext()));
+        goToLogin();
+    }
+
     private void goToLogin() {
         Intent intent = new Intent(this,LoginActivity.class);
         startActivity(intent);
@@ -146,5 +180,29 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         System.out.println("Cartão escolhido!");
         Intent intent = new Intent(this, NewCardActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onPagarInteraction(double valor, Cartao cartao) {
+        Toast.makeText(this, "Não implementado :(", Toast.LENGTH_LONG).show();
+
+    }
+
+    private static class CleanDbAsync extends AsyncTask<Void, Void, Void> {
+
+        private final EventoDAO fDao;
+        private final CartaoDAO sDao;
+
+        CleanDbAsync(TheDatabase db) {
+            fDao = db.eventoDAO();
+            sDao = db.cartaoDAO();
+        }
+
+        @Override
+        protected Void doInBackground(final Void... params) {
+            fDao.deleteAll();
+            sDao.deleteAll();
+            return null;
+        }
     }
 }

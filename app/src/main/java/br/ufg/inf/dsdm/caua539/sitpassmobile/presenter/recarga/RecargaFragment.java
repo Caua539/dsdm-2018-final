@@ -1,9 +1,14 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
+import android.content.DialogInterface;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,13 +18,19 @@ import android.text.method.DigitsKeyListener;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.Toast;
 
+import java.lang.ref.WeakReference;
 import java.text.DecimalFormatSymbols;
 import java.util.List;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.DAOs.CartaoDAO;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.RVAdapters.CartoesRecyclerViewAdapter;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.model.ViewModel.CartoesViewModel;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
@@ -33,7 +44,9 @@ public class RecargaFragment extends BaseFragment {
 
     private OnFragmentInteractionListener mListener;
     private OnListFragmentInteractionListener listListener;
+    private OnButtonInteractionListener bttnListener;
     private CartoesViewModel viewModel;
+    private EditText input;
 
     public RecargaFragment() {
         // Required empty public constructor
@@ -69,7 +82,7 @@ public class RecargaFragment extends BaseFragment {
         subscribeUiCartoes();
 
         //Definição de separador de decimais por localidade
-        EditText input = view.findViewById(R.id.input_valor);
+        input = view.findViewById(R.id.input_valor);
         char separator = DecimalFormatSymbols.getInstance().getDecimalSeparator();
         input.setKeyListener(DigitsKeyListener.getInstance("0123456789" + separator));
 
@@ -134,6 +147,12 @@ public class RecargaFragment extends BaseFragment {
             throw new RuntimeException(context.toString()
                     + " must implement OnListFragmentInteractionListener");
         }
+        if (context instanceof OnButtonInteractionListener){
+            bttnListener = (OnButtonInteractionListener) context;
+        } else {
+            throw new RuntimeException(context.toString()
+                    + " must implement OnButtonInteractionListener");
+        }
     }
 
     @Override
@@ -141,6 +160,57 @@ public class RecargaFragment extends BaseFragment {
         super.onDetach();
         mListener = null;
         listListener = null;
+    }
+
+    public boolean selectedCard(ImageView cartaoView, ImageView deleteCartao, final Cartao card, boolean selected){
+        if (selected == false){
+            deleteCartao.setVisibility(View.VISIBLE);
+            cartaoView.setBackgroundColor(Color.GRAY);
+            deleteCartao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new AlertDialog.Builder(getContext())
+                            .setTitle("Deletar Cartão")
+                            .setMessage("Deseja realmente deletar o cartão?")
+                            .setIcon(android.R.drawable.ic_dialog_alert)
+                            .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int whichButton) {
+                                    new DeleteAsyncTask(getActivity(), getContext(), card).execute();
+                                    toggleBotaoPagar(true, card);
+                                }})
+                            .setNegativeButton(android.R.string.no, null).show();
+                }
+            });
+            return true;
+        }
+        else {
+            deleteCartao.setVisibility(View.INVISIBLE);
+            cartaoView.setBackgroundColor(Color.WHITE);
+            toggleBotaoPagar(false, null);
+            return false;
+        }
+
+    }
+
+    public void toggleBotaoPagar(boolean status, final Cartao card){
+        Button botao = getActivity().findViewById(R.id.button_pagar);
+        botao.setEnabled(status);
+        if (status){
+            botao.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    String valortext = input.getText().toString();
+                    valortext = valortext.replace(",", ".");
+                    try{
+                        double valor = Double.parseDouble(valortext);
+                        bttnListener.onPagarInteraction(valor, card);
+                    } catch (Exception e){
+                        Toast.makeText(getActivity(), "Valor inválido.", Toast.LENGTH_LONG).show();
+                    }
+
+                }
+            });
+        }
     }
 
     public interface OnFragmentInteractionListener {
@@ -151,5 +221,42 @@ public class RecargaFragment extends BaseFragment {
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
         void onNewCardInteraction ();
+    }
+
+    public interface OnButtonInteractionListener {
+        void onPagarInteraction(double valor, Cartao cartao);
+    }
+
+    private static class DeleteAsyncTask extends AsyncTask<Void, Void, Integer> {
+
+        //Prevent leak
+        private WeakReference<Activity> weakActivity;
+        private Cartao cartao;
+        private Context context;
+
+
+        public DeleteAsyncTask(Activity activity, Context context, Cartao cartao) {
+            weakActivity = new WeakReference<>(activity);
+            this.cartao = cartao;
+            this.context = context;
+
+        }
+
+        @Override
+        protected Integer doInBackground(Void... params) {
+            CartaoDAO dao = TheDatabase.getDatabase(context).cartaoDAO();
+            dao.deleteCartao(cartao.id);
+            return 0;
+        }
+
+        @Override
+        protected void onPostExecute(Integer result) {
+            Activity activity = weakActivity.get();
+            if(activity == null) {
+                return;
+            }
+            Toast.makeText(activity, "Cartão deletado com sucesso!", Toast.LENGTH_LONG).show();
+
+        }
     }
 }

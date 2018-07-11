@@ -40,7 +40,7 @@ public class EncUtil {
             if (!keyStore.containsAlias(alias)) {
                 Calendar start = Calendar.getInstance();
                 Calendar end = Calendar.getInstance();
-                end.add(Calendar.YEAR, 5);
+                end.add(Calendar.YEAR, 1);
                 KeyPairGeneratorSpec spec = new KeyPairGeneratorSpec.Builder(context)
                         .setAlias(alias)
                         .setSubject(new X500Principal("CN="+alias+", O=Android Authority"))

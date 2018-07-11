@@ -13,6 +13,8 @@ import com.braintreepayments.cardform.OnCardFormSubmitListener;
 import com.braintreepayments.cardform.view.CardForm;
 
 import java.lang.ref.WeakReference;
+import java.security.SecureRandom;
+import java.util.Random;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EncUtil;
@@ -65,12 +67,11 @@ public class NewCardActivity extends BaseActivity implements OnCardFormSubmitLis
             String cardN = EncUtil.encryptString(mCardForm.getCardNumber());
             String aux = mCardForm.getCardNumber();
             String end = aux.substring(aux.length() - 4);
-            int cvv = Integer.parseInt(mCardForm.getCvv());
+            String cvv = EncUtil.encryptString(mCardForm.getCvv());
             String validade = EncUtil.encryptString(""+mCardForm.getExpirationMonth()+"/"+mCardForm.getExpirationYear());
             String nome = nomeedit.getText().toString();
 
-            Cartao cartao = new Cartao(cardN, nome, end, cvv, validade);
-            new CartaoAsyncTask(this, busdb, cartao).execute();
+            new CartaoAsyncTask(this, busdb, cardN, nome, end, cvv, validade).execute();
 
         } else {
             mCardForm.validate();
@@ -88,17 +89,33 @@ public class NewCardActivity extends BaseActivity implements OnCardFormSubmitLis
         //Prevent leak
         private WeakReference<Activity> weakActivity;
         private final TheDatabase db;
-        private Cartao cartao;
+        private  String cardN;
+        private String nome;
+        private String end;
+        private String cvv;
+        private String validade;
+        Random secure = new SecureRandom();
 
-        public CartaoAsyncTask(Activity activity, TheDatabase busdb, Cartao cartao) {
+        public CartaoAsyncTask(Activity activity, TheDatabase busdb, String cardN, String nome, String end, String cvv, String validade) {
             weakActivity = new WeakReference<>(activity);
             this.db = busdb;
-            this.cartao = cartao;
+            this.cardN = cardN;
+            this.nome = nome;
+            this.end = end;
+            this.cvv = cvv;
+            this.validade = validade;
         }
 
         @Override
         protected Integer doInBackground(Void... params) {
-            if (db.cartaoDAO().getCartaoByCodigo(cartao.id) == null){
+            if (db.cartaoDAO().getCartaoByNumero(cardN) == null){
+                int id;
+                do{
+                    id = secure.nextInt(9997)+1;
+                }
+                while(db.cartaoDAO().getCartaoByCodigo(id) != null);
+
+                Cartao cartao = new Cartao(id, cardN, nome, end, cvv, validade);
                 db.cartaoDAO().insertCartao(cartao);
                 return 0;
             }

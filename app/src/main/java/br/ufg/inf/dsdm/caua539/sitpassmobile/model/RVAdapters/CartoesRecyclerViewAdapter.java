@@ -18,10 +18,12 @@ public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecy
 
     private final List<Cartao> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final RecargaFragment fragment;
 
     public CartoesRecyclerViewAdapter(RecargaFragment fragment, List<Cartao> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
+        this.fragment = fragment;
     }
 
     @Override
@@ -48,8 +50,15 @@ public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecy
 
         }
         else {
-            holder.newCartao.setVisibility(View.INVISIBLE);
             holder.nomeCartao.setText(String.format("%s %s", "Final", holder.mItem.end));
+            holder.mView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (null != mListener) {
+                        holder.selected = fragment.selectedCard(holder.cartaoView, holder.deleteCartao, holder.mItem, holder.selected);
+                    }
+                }
+            });
         }
 
     }
@@ -63,13 +72,19 @@ public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecy
         public final View mView;
         public final TextView nomeCartao;
         public final ImageView newCartao;
+        public final ImageView deleteCartao;
+        public final ImageView cartaoView;
         public Cartao mItem;
+        public boolean selected;
 
         public ViewHolder(View view) {
             super(view);
             mView = view;
             nomeCartao = view.findViewById(R.id.text_cartaoname);
             newCartao = view.findViewById(R.id.icon_newcard);
+            deleteCartao = view.findViewById(R.id.icon_deletecard);
+            cartaoView = view.findViewById(R.id.cartaoView);
+            selected = false;
         }
 
         @Override
