@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:backgroundTint="@color/colorWhite"
                 android:hint="@string/hint_email"
-                android:inputType="textEmailAddress"
+                android:inputType="textEmailAddress|number"
                 android:textColor="@color/colorWhite"
                 android:textColorHint="@color/colorWhite"
                 android:textColorLink="@color/colorWhite" />

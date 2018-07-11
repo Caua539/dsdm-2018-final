@@ -176,11 +176,12 @@ public class RecargaFragment extends BaseFragment {
                             .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int whichButton) {
                                     new DeleteAsyncTask(getActivity(), getContext(), card).execute();
-                                    toggleBotaoPagar(true, card);
+                                    toggleBotaoPagar(false, null);
                                 }})
                             .setNegativeButton(android.R.string.no, null).show();
                 }
             });
+            toggleBotaoPagar(true, card);
             return true;
         }
         else {
