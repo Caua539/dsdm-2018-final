@@ -48,7 +48,8 @@ public class CartoesRecyclerViewAdapter extends RecyclerView.Adapter<CartoesRecy
 
         }
         else {
-            holder.nomeCartao.setText(String.format("%s %s", "Final", holder.mItem.pan.split(" ")[3]));
+            holder.newCartao.setVisibility(View.INVISIBLE);
+            holder.nomeCartao.setText(String.format("%s %s", "Final", holder.mItem.end));
         }
 
     }

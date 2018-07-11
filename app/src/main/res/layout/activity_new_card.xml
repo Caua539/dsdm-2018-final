@@ -57,6 +57,7 @@
         android:id="@+id/layout_inputcartaonome"
         android:layout_width="290dp"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -68,7 +69,8 @@
             android:id="@+id/CartaoNomeEditText"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/nometitular_hint" />
+            android:hint="@string/nometitular_hint"
+            android:textSize="14sp" />
     </android.support.design.widget.TextInputLayout>
 
     <ImageView

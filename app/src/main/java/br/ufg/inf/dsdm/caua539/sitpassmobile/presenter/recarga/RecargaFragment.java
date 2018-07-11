@@ -7,7 +7,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.method.DigitsKeyListener;
@@ -17,7 +16,6 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 
 import java.text.DecimalFormatSymbols;
-import java.util.Date;
 import java.util.List;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
@@ -27,14 +25,6 @@ import br.ufg.inf.dsdm.caua539.sitpassmobile.model.ViewModel.CartoesViewModel;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link RecargaFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link RecargaFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class RecargaFragment extends BaseFragment {
 
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -99,7 +89,7 @@ public class RecargaFragment extends BaseFragment {
     }
 
     public Cartao newCartao(){
-        Cartao cartao = new Cartao(9999,"", "", 0, new Date());
+        Cartao cartao = new Cartao(9999);
         return cartao;
     }
 

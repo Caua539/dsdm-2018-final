@@ -17,8 +17,8 @@ public interface CartaoDAO {
     @Query("select * from Cartao ORDER BY id asc")
     LiveData<List<Cartao>> listAllCartoes();
 
-    @Query("SELECT * FROM Cartao WHERE pan=:pan")
-    Cartao getCartaoByCodigo(String pan);
+    @Query("SELECT * FROM Cartao WHERE id=:id")
+    Cartao getCartaoByCodigo(int id);
 
     @Query("DELETE FROM Cartao")
     void deleteAll();

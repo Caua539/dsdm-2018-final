@@ -7,8 +7,6 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import org.greenrobot.eventbus.EventBus;
@@ -20,17 +18,14 @@ import java.util.Random;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Cartao;
+import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EncUtil;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.TheDatabase;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.dummy.DummyContent;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.data.Entities.Evento;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.BaseFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.historico.HistoricoFragment;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.login.LoginActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.NewCardActivity;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga.RecargaFragment;
-import br.ufg.inf.dsdm.caua539.sitpassmobile.web.WebHistorico;
 
 public class MainActivity extends BaseActivity implements HomeFragment.OnFragmentInteractionListener, RecargaFragment.OnFragmentInteractionListener, RecargaFragment.OnListFragmentInteractionListener {
 
@@ -73,18 +68,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        key = EasySharedPreferences.getCharFromKey(getApplicationContext(), EasySharedPreferences.KEY_PASS);
-        if (key == null){
-            String alphabet = "abcdefghijklmnopqrstuvxywz1234567890";
-            char[] c = new char[20];
-            for (int i = 0; i < 20; i++){
-                int j = secure.nextInt(alphabet.length());
-                c[i] = alphabet.charAt(j);
-            }
-
-            key = c;
-            EasySharedPreferences.setCharToKey(getApplicationContext(), EasySharedPreferences.KEY_PASS, key);
-        }
+        EncUtil.createKeyStore(getApplicationContext());
 
         initToolbar(R.id.toolbar, "Início");
 

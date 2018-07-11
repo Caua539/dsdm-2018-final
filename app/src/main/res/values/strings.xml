@@ -34,7 +34,7 @@
     <string name="historico_perdido"><a href="http://www.sitpass.com.br/portalsitpass/portalusuariopf/login.html">Cartão perdido ou roubado?</a></string>
     <string name="desc_newcard">Ícone de Novo Cartão</string>
 
-    <string name="nometitular_hint">Nome do Titular</string>
+    <string name="nometitular_hint">Nome do Titular (Opcional)</string>
     <string name="GravarCartao">Gravar</string>
     <string name="CartaoValido">Formulário é valido!</string>
     <string name="CartaoInvalido">Formulário não é válido!</string>

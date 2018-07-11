@@ -24,13 +24,14 @@
             android:layout_height="50dp"
             android:layout_gravity="end"
             android:contentDescription="@string/desc_newcard"
+            android:visibility="invisible"
             app:srcCompat="@drawable/ic_add_circle_outline_black_24dp" />
     </FrameLayout>
 
     <TextView
         android:id="@+id/text_cartaoname"
         android:layout_width="75dp"
-        android:layout_height="wrap_content"
+        android:layout_height="55dp"
         android:textAlignment="center"
         android:textSize="18sp" />
 
