@@ -2,6 +2,8 @@ package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.recarga;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
@@ -77,6 +79,12 @@ public class NewCardActivity extends BaseActivity implements OnCardFormSubmitLis
             mCardForm.validate();
             Toast.makeText(this, R.string.CartaoInvalido, Toast.LENGTH_SHORT).show();
         }
+    }
+
+    @Override
+    public void initToolbar(int id, String message){
+        super.initToolbar(id, message);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     public TheDatabase createDb(Context context){

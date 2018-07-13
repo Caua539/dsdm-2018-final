@@ -6,6 +6,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
@@ -44,15 +45,13 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
 
 
         if (holder.mItem.tipo){
-            holder.mTipo.setText("REC:");
-            holder.mTipo.setTextColor(Color.parseColor(green));
+            holder.mTipo.setColorFilter(Color.parseColor(green));
             holder.mValor.setText(String.format("+ R$ %.2f", holder.mItem.valor));
             holder.mValor.setTextColor(Color.parseColor(green));
             holder.mLocal.setText(String.format("Local: %s",holder.mItem.local));
         }
         else {
-            holder.mTipo.setText("DÉB:");
-            holder.mTipo.setTextColor(Color.parseColor(red));
+            holder.mTipo.setColorFilter(Color.parseColor(red));
             holder.mValor.setText(String.format("- R$ %.2f", holder.mItem.valor));
             holder.mValor.setTextColor(Color.parseColor(red));
             holder.mLocal.setText(String.format("Ônibus: %s",holder.mItem.local));
@@ -76,7 +75,7 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         public final View mView;
-        public final TextView mTipo;
+        public final ImageView mTipo;
         public final TextView mData;
         public final TextView mLocal;
         public final TextView mValor;
@@ -85,7 +84,7 @@ public class HistoricoRecyclerViewAdapter extends RecyclerView.Adapter<Historico
         public ViewHolder(View view) {
             super(view);
             mView = view;
-            mTipo = (TextView) view.findViewById(R.id.item_tipotransac);
+            mTipo = (ImageView) view.findViewById(R.id.status_historico);
             mData = (TextView) view.findViewById(R.id.item_data);
             mLocal = (TextView) view.findViewById(R.id.item_local);
             mValor = (TextView) view.findViewById(R.id.item_valor);

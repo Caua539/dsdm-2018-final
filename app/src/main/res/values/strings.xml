@@ -42,4 +42,5 @@
     <string name="icon_person">Ícone de uma pessoa</string>
     <string name="button_pagar">Pagar</string>
     <string name="button_logout">Logout</string>
+    <string name="desc_status_historico">Denota o tipo de transação dependendo da cor</string>
 </resources>

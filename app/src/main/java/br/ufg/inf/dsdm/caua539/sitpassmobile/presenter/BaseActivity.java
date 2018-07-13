@@ -36,12 +36,7 @@ public class BaseActivity extends AppCompatActivity {
     public void initToolbar(int id, String name){
         Toolbar toolbar = (Toolbar) findViewById(id);
         toolbar.setTitle(name);
-        toolbar.setTitleMarginStart(120);
-        toolbar.setTitleTextColor(ContextCompat.getColor(this, R.color.colorWhite));
         setSupportActionBar(toolbar);
-
-        //getSupportActionBar().setDisplayShowHomeEnabled(true);
-        //getSupportActionBar().setIcon(R.drawable.transportbusicon);
     }
 
     public void showFixedBottom(String message){

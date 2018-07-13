@@ -1,17 +1,26 @@
 package br.ufg.inf.dsdm.caua539.sitpassmobile.presenter.home;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.squareup.picasso.Picasso;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.InputStream;
 
 import br.ufg.inf.dsdm.caua539.sitpassmobile.R;
 import br.ufg.inf.dsdm.caua539.sitpassmobile.data.EasySharedPreferences;
@@ -31,7 +40,7 @@ public class HomeFragment extends BaseFragment {
 
     private static final String ARG_NAVITEM = "navigation_item";
 
-    private double saldo = 0.00;
+    private double saldo;
     private String nome;
     public final double valorPassagem = 4.05;
 
@@ -78,6 +87,7 @@ public class HomeFragment extends BaseFragment {
         nome = EasySharedPreferences.getStringFromKey(getContext(), EasySharedPreferences.KEY_NAME);
         substitueTextVariable(nome, R.id.text_hello, R.string.home_hello);
         setSaldo();
+        setProfilepic();
 
         EventBus.getDefault().register(this);
         requestSaldo();
@@ -98,12 +108,25 @@ public class HomeFragment extends BaseFragment {
 
     public void setSaldo() {
 
+        saldo = EasySharedPreferences.getDoubleFromKey(getContext(), EasySharedPreferences.KEY_SALDO);
         String saldoValue = String.format("%.2f", saldo);
         int numPassagens = (int)(saldo / valorPassagem);
         String passagensValue = String.format("%d", numPassagens);
 
         substitueTextVariable(saldoValue, R.id.text_saldo, R.string.home_saldo);
         substitueTextVariable(passagensValue, R.id.text_numeropass, R.string.home_numpass);
+    }
+
+    public void setProfilepic(){
+        ImageView profilepic = (ImageView) getActivity().findViewById(R.id.img_fotousuario) ;
+        String imgurl = EasySharedPreferences.getStringFromKey(getContext(), EasySharedPreferences.KEY_IMGURL);
+        if (imgurl.trim().length() != 0){
+            Picasso.get()
+                    .load(imgurl)
+                    .placeholder(R.drawable.ic_person)
+                    .error(R.drawable.ic_person)
+                    .into(profilepic);
+        }
     }
 
 
@@ -136,21 +159,11 @@ public class HomeFragment extends BaseFragment {
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onMessageEvent(Double saldo) {
         EasySharedPreferences.setDoubleToKey(getContext(),EasySharedPreferences.KEY_SALDO,saldo);
-        this.saldo = saldo;
         setSaldo();
     }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
     public interface OnFragmentInteractionListener {
         void onButtonFragmentInteraction();
     }
+
 }

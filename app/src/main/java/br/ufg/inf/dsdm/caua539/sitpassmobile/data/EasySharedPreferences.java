@@ -11,7 +11,7 @@ public class EasySharedPreferences {
     public static String KEY_SALDO = "saldo";
     public static String KEY_SESSION = "session";
     public static String KEY_LOGGEDIN = "loggedin";
-    public static String KEY_PASS = "pass";
+    public static String KEY_IMGURL = "imgurl";
 
     public static String getStringFromKey(Context context, String key){
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
@@ -26,29 +26,9 @@ public class EasySharedPreferences {
     }
 
 
-    public static void setCharToKey (Context context, String key, char[] value){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        SharedPreferences.Editor editor = pref.edit();
-        String pass = value.toString();
-        editor.putString(key,pass);
-        editor.commit();
-    }
-
-
-    public static char[] getCharFromKey(Context context, String key){
-        SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        String s = pref.getString(key, "");
-        if (s == ""){
-            return null;
-        }
-        char[] pass = s.toCharArray();
-        return pass;
-    }
-
-
     public static double getDoubleFromKey(Context context, String key) {
         SharedPreferences pref = PreferenceManager.getDefaultSharedPreferences(context);
-        return Double.longBitsToDouble(pref.getLong(key, Double.doubleToLongBits(0)));
+        return Double.longBitsToDouble(pref.getLong(key, Double.doubleToLongBits(0.00)));
     }
 
     public static void setDoubleToKey(Context context, String key, double value){

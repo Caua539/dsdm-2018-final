@@ -7,6 +7,16 @@ public class Usuario {
     private String session;
     private double saldo;
 
+    public String getProfilepicurl() {
+        return profilepicurl;
+    }
+
+    public void setProfilepicurl(String profilepicurl) {
+        this.profilepicurl = profilepicurl;
+    }
+
+    private String profilepicurl;
+
     public String getNome() {
         return nome;
     }

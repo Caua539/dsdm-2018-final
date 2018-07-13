@@ -133,6 +133,12 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
         showAlert(exception.getMessage());
     }
 
+    @Override
+    public void initToolbar(int id, String message){
+        super.initToolbar(id, message);
+        getSupportActionBar().setIcon(R.drawable.ic_toolbar_icon);
+    }
+
 
     public void initView(HomeFragment fragment){
         fragmentManager = getSupportFragmentManager();

@@ -43,6 +43,7 @@ public class WebLogin extends WebConnect {
             Usuario user = new Usuario();
             JSONObject object = new JSONObject(responseBody);
             user.setNome(object.getString("name"));
+            user.setProfilepicurl(object.getString("profilepic"));
             user.setCpf(cpf);
             user.setSession(object.getString("session"));
             EventBus.getDefault().post(user);

@@ -103,6 +103,7 @@ public class LoginActivity extends BaseActivity {
     private void storeCredentials(Usuario user){
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_CPF,user.getCpf());
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_NAME,user.getNome());
+        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_IMGURL,user.getProfilepicurl());
         EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,0.00);
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_SESSION,user.getSession());
     }
