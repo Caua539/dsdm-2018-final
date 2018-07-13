@@ -157,6 +157,7 @@ public class MainActivity extends BaseActivity implements HomeFragment.OnFragmen
 
     private void dologout(){
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_CPF,"");
+        EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_IMGURL,"");
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_NAME,"");
         EasySharedPreferences.setDoubleToKey(this,EasySharedPreferences.KEY_SALDO,0);
         EasySharedPreferences.setStringToKey(this,EasySharedPreferences.KEY_SESSION,"");

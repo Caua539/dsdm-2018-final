@@ -31,7 +31,7 @@
             android:id="@+id/icon_deletecard"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:layout_gravity="bottom"
+            android:layout_gravity="end"
             android:contentDescription="@string/desc_newcard"
             android:visibility="invisible"
             app:srcCompat="@drawable/ic_close_red_24dp" />

@@ -165,7 +165,7 @@ public class RecargaFragment extends BaseFragment {
     public boolean selectedCard(ImageView cartaoView, ImageView deleteCartao, final Cartao card, boolean selected){
         if (selected == false){
             deleteCartao.setVisibility(View.VISIBLE);
-            cartaoView.setBackgroundColor(Color.GRAY);
+            cartaoView.setBackgroundResource(R.drawable.image_circular_border);
             deleteCartao.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
